@@ -135,7 +135,7 @@
     "babili-webpack-plugin": "^0.1.2",
     "chalk": "^2.0.1",
     "concurrently": "^3.5.0",
-    "cross-env": "^5.0.0",
+    "cross-env": "^5.1.1",
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.3",
     "electron": "^1.6.10",
@@ -192,6 +192,8 @@
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
     "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-desktop": "^0.3.3",
     "react-dom": "^15.6.1",
     "react-hot-loader": "3.0.0-beta.6",
     "react-redux": "^5.0.5",
@@ -200,7 +202,8 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "styled-components": "^2.2.4"
   },
   "devEngines": {
     "node": ">=7.x",
