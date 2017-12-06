@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain, Tray, Menu } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -60,9 +60,10 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728
+    show: true,
+    width: 1280,
+    height: 720,
+    frame: false,
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -83,4 +84,26 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+  ipcMain.send('put-in-tray');
 });
+
+let appIcon = null;
+ipcMain.on('put-in-tray', function (event) {
+  const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png';
+  const path = require('path');
+  const iconPath = path.join(__dirname, iconName);
+  appIcon = new Tray(iconPath);
+  const contextMenu = Menu.buildFromTemplate([{
+    label: '移除',
+    click() {
+      event.sender.send('tray-removed');
+    }
+  }]);
+  appIcon.setToolTip('在托盘中的 Electron 示例.');
+  appIcon.setContextMenu(contextMenu);
+});
+
+ipcMain.on('remove-tray', function () {
+  appIcon.destroy();
+});
+
