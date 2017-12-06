@@ -11,22 +11,12 @@ const history = createHashHistory();
 
 const configureStore = (initialState?: counterStateType) => {
   // Redux Configuration
-  const middleware = [];
   const enhancers = [];
 
-  // Thunk Middleware
-  middleware.push(thunk);
-
-  // Logging Middleware
-  const logger = createLogger({
-    level: 'info',
-    collapsed: true
-  });
-  middleware.push(logger);
-
   // Router Middleware
-  const router = routerMiddleware(history);
-  middleware.push(router);
+  const middlewares = [
+    routerMiddleware(history)
+  ];
 
   // Redux DevTools Configuration
   const actionCreators = {
@@ -44,7 +34,8 @@ const configureStore = (initialState?: counterStateType) => {
   /* eslint-enable no-underscore-dangle */
 
   // Apply Middleware & Compose Enhancers
-  enhancers.push(applyMiddleware(...middleware));
+
+  enhancers.push(applyMiddleware(...middlewares));
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
