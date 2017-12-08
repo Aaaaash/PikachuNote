@@ -60,10 +60,14 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
-    show: true,
     width: 1280,
     height: 720,
+    maximizable: false,
+    center: true,
+    show: false,
+    resizable: false,
     frame: false,
+    titleBarStyle: 'hidden-inset'
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -78,7 +82,8 @@ app.on('ready', async () => {
     mainWindow.focus();
   });
 
-  mainWindow.on('closed', () => {
+  mainWindow.on('closed', (data) => {
+    console.log(data);
     mainWindow = null;
   });
 
@@ -102,8 +107,3 @@ ipcMain.on('put-in-tray', function (event) {
   appIcon.setToolTip('在托盘中的 Electron 示例.');
   appIcon.setContextMenu(contextMenu);
 });
-
-ipcMain.on('remove-tray', function () {
-  appIcon.destroy();
-});
-
