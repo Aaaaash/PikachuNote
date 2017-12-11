@@ -60,14 +60,15 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
+    minWidth: 1280,
+    minHeight: 720,
     width: 1280,
     height: 720,
-    maximizable: false,
     center: true,
-    show: false,
-    resizable: false,
-    frame: false,
-    titleBarStyle: 'hidden-inset'
+    // show: false,
+    // resizable: false,
+    // frame: false,
+    titleBarStyle: 'hiddenInset'
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

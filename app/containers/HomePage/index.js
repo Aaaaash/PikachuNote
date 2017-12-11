@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { TitleBar, Toolbar } from 'react-desktop/macOs';
 import '@blueprintjs/core/dist/blueprint.css';
 
 const ipc = require('electron').ipcRenderer;
+
 console.log(ipc);
 const Container = styled.div`
   min-width: 128px;
-  height: 925px;
+  min-height: 720px;
   display: flex;
   flex-direction: column;
 `;
