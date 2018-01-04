@@ -24,7 +24,7 @@ const Main = styled.div`
 const Detail = styled.div`
   width: 325px;
   background-color: #fff;
-  border-right: 1px solid #e0e1e5;
+  border-right: 1px solid rgba(167, 182, 194, 0.3);
 `;
 
 const Content = styled.div`

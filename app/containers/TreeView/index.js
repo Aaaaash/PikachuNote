@@ -6,7 +6,7 @@ import {
   insertNote,
 } from '../../actions';
 
-import { Container, Header, HeaderButton } from './styled';
+import { Container, Header, HeaderButton, Tree, DirRoot, ChildDir } from './styled';
 
 class TreeView extends PureComponent {
   state = {
@@ -49,12 +49,33 @@ class TreeView extends PureComponent {
         导入
       </HeaderButton>
     </Header>
-    );
+  );
+
+  renderTreeView = () => {
+    const { dir } = this.props;
+    return dir.map((item) => (
+      <div key={item.id} style={{ position: 'relative' }}>
+        <DirRoot>
+          <span className="pt-icon-standard pt-icon-folder-open" />
+          {item.title}
+        </DirRoot>
+        {item.children && item.children.length > 0 && item.children.map((child) => (
+          <ChildDir>
+            <span className="pt-icon-standard pt-icon-document" />
+            {child.title}
+          </ChildDir>
+        ))}
+      </div>
+    ));
+  }
 
   render() {
     return (
-      <Container onContextMenu={this.showContextMenu}>
+      <Container>
         {this.renderHeader()}
+        <Tree onContextMenu={this.showContextMenu}>
+          {this.renderTreeView()}
+        </Tree>
       </Container>
     );
   }

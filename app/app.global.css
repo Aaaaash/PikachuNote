@@ -42,3 +42,8 @@ a:hover {
 button, input {
   outline: none;
 }
+
+.pt-icon-standard {
+  padding: 0px 5px;
+  color: #434A54 !important;
+}
