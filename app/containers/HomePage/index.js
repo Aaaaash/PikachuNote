@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import '@blueprintjs/core/dist/blueprint.css';
 
+import TreeView from '../TreeView';
+
 const ipc = require('electron').ipcRenderer;
 
 console.log(ipc);
@@ -9,6 +11,7 @@ const Container = styled.div`
   min-width: 128px;
   min-height: 720px;
   display: flex;
+  padding-top: 40px;
   flex-direction: column;
 `;
 
@@ -16,11 +19,6 @@ const Main = styled.div`
   flex: 1;
   display: flex;
   background-color: #f8f5f8;
-`;
-
-const Left = styled.div`
-  width: 250px;
-  border-right: 1px solid #e0e1e5;
 `;
 
 const Detail = styled.div`
@@ -39,15 +37,9 @@ export default class HomePage extends PureComponent {
     return (
       <Container>
         <Main>
-          <Left>
-            文件夹
-          </Left>
-          <Detail>
-            详情
-          </Detail>
-          <Content>
-            内容
-          </Content>
+          <TreeView />
+          <Detail />
+          <Content />
         </Main>
       </Container>
     );

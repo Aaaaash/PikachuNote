@@ -38,3 +38,7 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+button, input {
+  outline: none;
+}

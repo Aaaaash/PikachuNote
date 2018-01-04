@@ -1,0 +1,71 @@
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
+
+import {
+  insertNote,
+} from '../../actions';
+
+import { Container, Header, HeaderButton } from './styled';
+
+class TreeView extends PureComponent {
+  state = {
+    isContextMenuOpen: false
+  };
+
+  handleInsertNote = () => {
+    const { onInsertNewNote } = this.props;
+    onInsertNewNote();
+  }
+
+  showContextMenu = e => {
+    e.preventDefault();
+    ContextMenu.show(
+      <Menu>
+        <MenuItem iconName="pt-icon-add" text="新建">
+          <MenuItem iconName="pt-icon-document" text="记事本" />
+          <MenuItem iconName="pt-icon-folder-open" text="文件夹" />
+        </MenuItem>
+      </Menu>,
+      { left: e.clientX, top: e.clientY },
+      () => this.setState({ isContextMenuOpen: false })
+    );
+    this.setState({ isContextMenuOpen: true });
+  };
+
+  renderHeader = () => (
+    <Header>
+      <HeaderButton
+        type="button"
+        onClick={this.handleInsertNote}
+        className="pt-button pt-minimal pt-icon-add .modifier"
+      >
+        记事本
+      </HeaderButton>
+      <HeaderButton
+        type="button"
+        className="pt-button pt-minimal pt-icon-cloud-upload .modifier"
+      >
+        导入
+      </HeaderButton>
+    </Header>
+    );
+
+  render() {
+    return (
+      <Container onContextMenu={this.showContextMenu}>
+        {this.renderHeader()}
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  dir: state.treeViewReducer.dir,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onInsertNewNote: () => dispatch(insertNote()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TreeView);
