@@ -7,7 +7,8 @@ function createIndexedDatabase(name, version = 1) {
   return new Promise((resolve, reject) => {
     const indexDBConnect = window.indexedDB.open(name, version);
     indexDBConnect.addEventListener('success', (event) => {
-      resolve(event.target.result);
+      const db = event.target.result;
+      resolve(db);
     });
 
     indexDBConnect.addEventListener('error', (event) => {
@@ -64,6 +65,7 @@ function createIndexDBObjectStore(dbName, storeName, version = 2, keyOptions, in
       if (!db.objectStoreNames.contains(storeName)) {
         const store = db.createObjectStore(storeName, keyOptions);
         index.forEach((i) => store.createIndex(i.name, i.key, i.options));
+        db.close();
         resolve(true);
       }
     };
