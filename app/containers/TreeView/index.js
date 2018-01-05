@@ -37,17 +37,15 @@ class TreeView extends PureComponent {
     <Header>
       <HeaderButton
         type="button"
+        title="新建"
         onClick={this.handleInsertNote}
         className="pt-button pt-minimal pt-icon-add .modifier"
-      >
-        记事本
-      </HeaderButton>
+      />
       <HeaderButton
         type="button"
+        title="导入"
         className="pt-button pt-minimal pt-icon-cloud-upload .modifier"
-      >
-        导入
-      </HeaderButton>
+      />
     </Header>
   );
 

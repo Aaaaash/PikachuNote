@@ -47,3 +47,8 @@ button, input {
   padding: 0px 5px;
   color: #434A54 !important;
 }
+
+.pt-input {
+  -webkit-app-region: no-drag;
+  cursor: text !important;
+}

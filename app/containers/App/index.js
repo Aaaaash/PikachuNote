@@ -1,36 +1,63 @@
 import React, { Component } from 'react';
 import { Position, Toaster, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
-import connectIndexDB from '../../utils/connectIndexDB';
+
+import { INDEXED_DATABASE_NAME } from '../../common/constants';
+import { injectIndexedDB, isDataBasebeCreated } from '../../utils/indexedDB';
 
 const DragHeader = styled.header`
   -webkit-app-region: drag;
-  position: absolute;
-  height: 40px;
+  height: 50px;
   width: 100%;
   z-index: 100;
-  background-color: #434A54;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px 20px;
+  background-color: #434a54;
 `;
 
 export default class App extends Component {
-  componentDidMount() {
-    setTimeout(() => {
-      const db = connectIndexDB('PIKACHUDB');
-      if (db) {
-        this.handleShowToaster('数据库已打开');
+  async componentDidMount() {
+    const haveDataBase = await isDataBasebeCreated(INDEXED_DATABASE_NAME);
+    if (!haveDataBase) {
+      await injectIndexedDB(INDEXED_DATABASE_NAME);
+      /* eslint-disable */
+      if (window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__ && window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__.transaction) {
+        this.handleShowToaster('数据库创建成功', Intent.SUCCESS);
       }
-    }, 3000);
+      /* eslint-enable */
+    }
   }
 
-  handleShowToaster = (message) => {
-    this.toaster.show({ message, timeout: 1000, intent: Intent.SUCCESS, });
-  }
+  handleShowToaster = (message, intent, timeout = 1000) => {
+    this.toaster.show({
+      message,
+      timeout,
+      intent,
+    });
+  };
 
   render() {
     return (
       <div>
-        <Toaster position={Position.BOTTOM_RIGHT} ref={(ref) => { this.toaster = ref; }} />
-        <DragHeader />
+        <Toaster
+          position={Position.BOTTOM_RIGHT}
+          ref={ref => {
+            this.toaster = ref;
+          }}
+        />
+        <DragHeader>
+          <div className="pt-input-group .modifier">
+            <span className="pt-icon pt-icon-search" />
+            <input
+              className="pt-input pt-round"
+              type="search"
+              placeholder="Search input"
+              dir="auto"
+            />
+          </div>
+        </DragHeader>
         {this.props.children}
       </div>
     );

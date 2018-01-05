@@ -12,11 +12,11 @@ export const Header = styled.div`
   display: flex;
   padding: 8px 0px;
   font-size: 12px !important;
-  justify-content: space-around;
   border-bottom: 1px solid rgba(167, 182, 194, 0.3);
 `;
 
 export const HeaderButton = styled.button`
+  margin-right: 10px;
   font-size: 13px !important;
   outline: none !important;
 `;

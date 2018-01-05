@@ -6,12 +6,10 @@ import TreeView from '../TreeView';
 
 const ipc = require('electron').ipcRenderer;
 
-console.log(ipc);
 const Container = styled.div`
   min-width: 128px;
   min-height: 720px;
   display: flex;
-  padding-top: 40px;
   flex-direction: column;
 `;
 
