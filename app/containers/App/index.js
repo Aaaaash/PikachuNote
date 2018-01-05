@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Position, Toaster, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
 
-import { INDEXED_DATABASE_NAME } from '../../common/constants';
-import { injectIndexedDB, isDataBasebeCreated } from '../../utils/indexedDB';
+import { INDEXED_DATABASE_NAME, INITIAL_DIR_STORE_PARAMS } from '../../common/constants';
+import { injectIndexedDB, isDataBasebeCreated, createIndexDBObjectStore } from '../../utils/indexedDB';
 
 const DragHeader = styled.header`
   -webkit-app-region: drag;
@@ -25,6 +25,11 @@ export default class App extends Component {
       /* eslint-disable */
       if (window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__ && window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__.transaction) {
         this.handleShowToaster('数据库创建成功', Intent.SUCCESS);
+      }
+
+      const dirStore = await createIndexDBObjectStore(...INITIAL_DIR_STORE_PARAMS);
+      if (dirStore) {
+        this.handleShowToaster('数据库初始化完成', Intent.SUCCESS);
       }
       /* eslint-enable */
     }
