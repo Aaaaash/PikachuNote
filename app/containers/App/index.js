@@ -3,7 +3,12 @@ import { Position, Toaster, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
 
 import { INDEXED_DATABASE_NAME, INITIAL_DIR_STORE_PARAMS } from '../../common/constants';
-import { injectIndexedDB, isDataBasebeCreated, createIndexDBObjectStore } from '../../utils/indexedDB';
+import {
+  injectIndexedDB,
+  isDataBasebeCreated,
+  createIndexDBObjectStore,
+  deleteDatabaseByName,
+} from '../../utils/indexedDB';
 
 const DragHeader = styled.header`
   -webkit-app-region: drag;
@@ -19,11 +24,15 @@ const DragHeader = styled.header`
 
 export default class App extends Component {
   async componentDidMount() {
+    // 测试阶段先主动删除
+    await deleteDatabaseByName(INDEXED_DATABASE_NAME);
     const haveDataBase = await isDataBasebeCreated(INDEXED_DATABASE_NAME);
     if (!haveDataBase) {
       await injectIndexedDB(INDEXED_DATABASE_NAME);
       /* eslint-disable */
-      if (window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__ && window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__.transaction) {
+      if (
+        window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__ && window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__.transaction
+      ) {
         this.handleShowToaster('数据库创建成功', Intent.SUCCESS);
       }
 
@@ -39,7 +48,7 @@ export default class App extends Component {
     this.toaster.show({
       message,
       timeout,
-      intent,
+      intent
     });
   };
 

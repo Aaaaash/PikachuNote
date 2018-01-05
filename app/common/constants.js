@@ -8,11 +8,7 @@ export const INITIAL_DIR_STORE_PARAMS = [
   new Date().getTime(),
   { keyPath: 'id', autoIncrement: false },
   [
-    {
-      name: 'titleIndex',
-      key: 'title',
-      options: { unqiue: false, mulitEntry: false }
-    }
+    { name: 'titleIndex', key: 'title', options: { unqiue: false, mulitEntry: false } }
   ]
 ];
 

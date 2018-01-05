@@ -1,9 +1,9 @@
 /**
- * createIndexedDatabase  创建一个数据库
+ * createDatabaseByName  创建一个数据库
  * @param {string} name 数据库命
  * @param {number} version 版本号
  */
-function createIndexedDatabase(name, version = 1) {
+function createDatabaseByName(name, version = 1) {
   return new Promise((resolve, reject) => {
     const indexDBConnect = window.indexedDB.open(name, version);
     indexDBConnect.addEventListener('success', (event) => {
@@ -42,7 +42,7 @@ function isDataBasebeCreated(name) {
  * @param {string} name 数据库名
  */
 async function injectIndexedDB(name) {
-  const __PIKACHU_NOTE_INDEXEDDB_DATABASE__ = await createIndexedDatabase(name);
+  const __PIKACHU_NOTE_INDEXEDDB_DATABASE__ = await createDatabaseByName(name);
   window.__PIKACHU_NOTE_INDEXEDDB_DATABASE__ = __PIKACHU_NOTE_INDEXEDDB_DATABASE__;
   __PIKACHU_NOTE_INDEXEDDB_DATABASE__.close();
 }
@@ -76,9 +76,27 @@ function createIndexDBObjectStore(dbName, storeName, version = 2, keyOptions, in
   });
 }
 
+/**
+ * deleteDatabaseByName 根据指定名称删除数据库
+ * @param {string} name 数据库名
+ */
+function deleteDatabaseByName(name) {
+  return new Promise((resolve, reject) => {
+    const indexDBConnect = indexedDB.deleteDatabase(name);
+    indexDBConnect.addEventListener('success', () => {
+      resolve(true);
+    });
+
+    indexDBConnect.addEventListener('error', (event) => {
+      reject(event.target.error);
+    });
+  });
+}
+
 export {
-  createIndexedDatabase,
+  createDatabaseByName,
   injectIndexedDB,
   isDataBasebeCreated,
   createIndexDBObjectStore,
+  deleteDatabaseByName,
 };
