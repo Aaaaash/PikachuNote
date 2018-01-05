@@ -43,7 +43,7 @@ export const DirRoot = styled.div`
 export const ChildDir = styled.div`
   padding-left: 28px;
   height: 36px;
-  line-height: 36px;
+  line-height: 36px; 
   cursor: pointer;
   transition: 200ms;
   display: flex;
