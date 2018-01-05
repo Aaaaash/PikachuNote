@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Position, Toaster, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
+import '@blueprintjs/core/dist/blueprint.css';
 
 import { INDEXED_DATABASE_NAME, INITIAL_DIR_STORE_PARAMS } from '../../common/constants';
 import {

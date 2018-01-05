@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
+import '@blueprintjs/core/dist/blueprint.css';
 
 import {
   insertNote,
