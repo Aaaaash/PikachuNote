@@ -13,12 +13,13 @@ interface CreateParams {
   keyOptions: object;
   index: Array<object>;
 }
+
 /**
  * createDatabaseByName  创建一个数据库
  * @param {string} name 数据库命
  * @param {number} version 版本号
  */
-function createDatabaseByName(name: string, version: number = 1): Promise<IDBDatabase> {
+function createDatabaseByName(name: string, version?: number): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const indexDBConnect: IDBOpenDBRequest = window.indexedDB.open(name, version);
     indexDBConnect.addEventListener('success', (event: any) => {
@@ -57,7 +58,7 @@ function isDataBasebeCreated(name: string): Promise<boolean> {
  * @param {string} name 数据库名
  */
 async function injectIndexedDB(name: string): Promise<void> {
-  const __PIKACHU_NOTE_INDEXEDDB_DATABASE__ = await createDatabaseByName(name);
+  const __PIKACHU_NOTE_INDEXEDDB_DATABASE__ = await createDatabaseByName(name, 1);
   (window as ElectronWindow).__PIKACHU_NOTE_INDEXEDDB_DATABASE__ = __PIKACHU_NOTE_INDEXEDDB_DATABASE__;
   (__PIKACHU_NOTE_INDEXEDDB_DATABASE__ as IDBDatabase).close();
 }
@@ -108,10 +109,72 @@ function deleteDatabaseByName(name: string): Promise<boolean> {
   });
 }
 
+/**
+ * getDataById 根据id获取数据
+ * @param dbName 数据库名
+ * @param storeName store名
+ * @param id 唯一id
+ */
+function getDataById(dbName: string, storeName: string, id: string) {
+  return new Promise((resolve, reject) => {
+    createDatabaseByName(dbName)
+      .then((db) => {
+        const tx: IDBTransaction = db.transaction(storeName, 'readonly');
+        const store = tx.objectStore(storeName);
+        const range = IDBKeyRange.only(id);
+
+        const storeConnect = store.openCursor(range);
+
+        let data: any;
+        storeConnect.addEventListener('success', (event: any) => {
+          const cursor = event.target.result;
+          if (cursor) {
+            data = cursor.value;
+            cursor.continue();
+          }
+        });
+
+        tx.addEventListener('complete', () => {
+          db.close();
+          resolve(data);
+        });
+      });
+  });
+}
+
+/**
+ * insertDataForSpecifiedStore 插入数据到指定store中
+ * @param dbName 数据库名
+ * @param storeName store名
+ * @param data 数据
+ */
+function insertDataForSpecifiedStore(dbName: string, storeName: string, data: any) {
+  return new Promise((resolve, reject) => {
+    createDatabaseByName(dbName)
+      .then((db) => {
+        const tx: IDBTransaction = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        const insertDataConnect: IDBRequest = store.add(data);
+
+        let result: any;
+        insertDataConnect.addEventListener('success', (event: any) => {
+          result = event.target.result;
+        });
+
+        tx.addEventListener('complete', () => {
+          db.close();
+          resolve(result);
+        });
+      })
+  })
+}
+
 export {
   createDatabaseByName,
   injectIndexedDB,
   isDataBasebeCreated,
   createIndexDBObjectStore,
   deleteDatabaseByName,
+  getDataById,
+  insertDataForSpecifiedStore,
 };

@@ -3,13 +3,16 @@ import { PureComponent } from 'react';
 import { Position, Toaster, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
 
-import { INDEXED_DATABASE_NAME, INITIAL_DIR_STORE_PARAMS } from '../../common/constants';
+import { INDEXED_DATABASE_NAME, INITIAL_DIR_STORE_PARAMS, TREE_DIRTORY_NAME } from '../../common/constants';
 import {
   injectIndexedDB,
   isDataBasebeCreated,
   deleteDatabaseByName,
   createIndexDBObjectStore,
+  insertDataForSpecifiedStore,
+  getDataById,
 } from '../../utils/indexedDB';
+import generateUUID from '../../utils/guid';
 
 const DragHeader = styled.header`
   -webkit-app-region: drag;
@@ -50,6 +53,16 @@ export default class App extends PureComponent<Props> {
       if (dirStore) {
         this.handleShowToaster('数据库初始化完成', Intent.SUCCESS);
       }
+
+      // 测试插入数据
+      const id = await insertDataForSpecifiedStore(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME, {
+        id: generateUUID(),
+        title: '主目录',
+        children: [],
+      });
+
+      const data = await getDataById(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME, (id as string));
+      console.log(data);
       /* eslint-enable */
     }
   }
