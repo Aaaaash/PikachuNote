@@ -3,11 +3,12 @@ import { PureComponent } from 'react';
 import { Position, Toaster, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
 
-import { INDEXED_DATABASE_NAME } from '../../common/constants';
+import { INDEXED_DATABASE_NAME, INITIAL_DIR_STORE_PARAMS } from '../../common/constants';
 import {
   injectIndexedDB,
   isDataBasebeCreated,
   deleteDatabaseByName,
+  createIndexDBObjectStore,
 } from '../../utils/indexedDB';
 
 const DragHeader = styled.header`
@@ -45,10 +46,10 @@ export default class App extends PureComponent<Props> {
         this.handleShowToaster('数据库创建成功', Intent.SUCCESS);
       }
 
-      // const dirStore = await createIndexDBObjectStore(...INITIAL_DIR_STORE_PARAMS);
-      // if (dirStore) {
-      //   this.handleShowToaster('数据库初始化完成', Intent.SUCCESS);
-      // }
+      const dirStore = await createIndexDBObjectStore(INITIAL_DIR_STORE_PARAMS);
+      if (dirStore) {
+        this.handleShowToaster('数据库初始化完成', Intent.SUCCESS);
+      }
       /* eslint-enable */
     }
   }

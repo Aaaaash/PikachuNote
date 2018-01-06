@@ -63,7 +63,7 @@ async function injectIndexedDB(name: string) {
  * @param {object} keyOptions 主键设置
  * @param {array} index 索引
  */
-function createIndexDBObjectStore(dbName: string, storeName: string, version = 2, keyOptions: object, index: any) {
+function createIndexDBObjectStore({ dbName, storeName, version = 2, keyOptions, index }) {
   return new Promise((resolve, reject) => {
     const indexDBConnect = indexedDB.open(dbName, version);
 

@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware, push } from 'react-router-redux';
-import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 
 import * as counterActions from '../actions';
@@ -22,11 +21,6 @@ const actionCreators = Object.assign({},
   {push}
 );
 
-const logger = (<any>createLogger)({
-  level: 'info',
-  collapsed: true
-});
-
 const history = createHashHistory();
 const router = routerMiddleware(history);
 
@@ -40,7 +34,7 @@ const composeEnhancers: typeof compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPO
   compose;
 /* eslint-enable no-underscore-dangle */
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, router, logger)
+  applyMiddleware(thunk, router)
 );
 
 function configureStore(initialState?: Object | void) {

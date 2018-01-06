@@ -7,6 +7,7 @@ import TreeView from '../TreeView';
 const Container = styled.div`
   min-width: 128px;
   min-height: 720px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 `;
