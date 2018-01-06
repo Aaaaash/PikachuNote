@@ -21,11 +21,15 @@ render(
 );
 
 if ((module as any).hot) {
-  (module as any).hot.accept('./containers/App', () => {
-    const NextRoot = require('./containers/App').default;
+  (module as any).hot.accept('./routes', () => {
+    const NextRoot = require('./routes').default;
     render(
       <AppContainer>
-        <NextRoot store={store} history={history} />
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <NextRoot />
+          </ConnectedRouter>
+        </Provider>
       </AppContainer>,
       document.getElementById('root')
     );
