@@ -58,7 +58,10 @@ export default class App extends PureComponent<Props> {
       const id = await insertDataForSpecifiedStore(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME, {
         id: generateUUID(),
         title: '主目录',
-        children: [],
+        children: [
+          { id: generateUUID(), title: '二级目录1', children: [] },
+          { id: generateUUID(), title: '二级目录2', children: [] },
+        ],
       });
 
       const data = await getDataById(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME, (id as string));

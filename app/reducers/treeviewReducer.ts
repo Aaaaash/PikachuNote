@@ -5,11 +5,10 @@ import {
 const initialState = {
   dir: [
     {
-      type: 0,
       id: 0,
       title: '主目录',
       children: [
-        { type: 1, id: 'qwertdjlk-dadjak', title: 'Hello World!' },
+        { id: 'qwertdjlk-dadjak', title: 'Hello World!', children: [] },
       ],
     }
   ],

@@ -2,18 +2,12 @@ import * as React from 'react';
 import { PureComponent } from 'react';
 import styled from 'styled-components';
 
-import TreeView from '../TreeView';
+import Sidebar from '../Sidebar';
 
 const Container = styled.div`
   min-width: 128px;
   min-height: 720px;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Main = styled.div`
-  flex: 1;
   display: flex;
   background-color: #f8f5f8;
 `;
@@ -33,11 +27,9 @@ export default class HomePage extends PureComponent {
   render() {
     return (
       <Container>
-        <Main>
-          <TreeView />
-          <Detail />
-          <Content />
-        </Main>
+        <Sidebar />
+        <Detail />
+        <Content />
       </Container>
     );
   }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
+import { ContextMenu, Menu, MenuItem, Icon } from '@blueprintjs/core';
 
 import {
   insertNote,
@@ -15,7 +15,7 @@ interface Props {
   [propName: string]: any;
 }
 
-class TreeView extends PureComponent<Props> {
+class Sidebar extends PureComponent<Props> {
   state = {
     isContextMenuOpen: false
   };
@@ -58,16 +58,15 @@ class TreeView extends PureComponent<Props> {
 
   renderTreeView = () => {
     const { dir } = this.props;
-    console.log(dir);
     return dir.map((item: any) => (
       <div key={item.id} style={{ position: 'relative' }}>
-        <DirRoot>
-          <span className="pt-icon-standard pt-icon-folder-open" />
+        <DirRoot onContextMenu={this.showContextMenu}>
+          <Icon iconName="pt-icon-folder-open" />
           {item.title}
         </DirRoot>
         {item.children && item.children.length > 0 && item.children.map((child: any) => (
           <ChildDir>
-            <span className="pt-icon-standard pt-icon-document" />
+            <Icon iconName="pt-icon-folder-open" />
             {child.title}
           </ChildDir>
         ))}
@@ -79,7 +78,7 @@ class TreeView extends PureComponent<Props> {
     return (
       <Container>
         {this.renderHeader()}
-        <Tree onContextMenu={this.showContextMenu}>
+        <Tree>
           {this.renderTreeView()}
         </Tree>
       </Container>
@@ -101,4 +100,4 @@ function mergePropss(stateProps: Object, dispatchProps: Object, ownProps: Object
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps, mergePropss);
 
-export default compose(withConnect)(TreeView);
+export default compose(withConnect)(Sidebar);
