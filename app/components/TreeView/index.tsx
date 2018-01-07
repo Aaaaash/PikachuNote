@@ -27,8 +27,8 @@ class TreeView extends PureComponent<Props> {
   renderTreeView = (): any => {
     const { childs, level } = this.props;
     return childs.map((subdir) => (
-      <div>
-        <Dir key={subdir.id}>
+      <div key={subdir.id}>
+        <Dir>
           <Icon iconName="pt-icon-folder-open" />
           {subdir.title}
         </Dir>
