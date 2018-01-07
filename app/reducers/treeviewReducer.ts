@@ -8,7 +8,9 @@ const initialState = {
       id: 0,
       title: '主目录',
       children: [
-        { id: 'qwertdjlk-dadjak', title: 'Hello World!', children: [] },
+        { id: 'qwertdjlk-dadjak', title: 'Hello World!', children: [
+          { id: 'dasdjsakl', title: '子目录！', children: [] }
+        ] },
       ],
     }
   ],

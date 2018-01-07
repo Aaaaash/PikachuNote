@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { ContextMenu, Menu, MenuItem, Icon } from '@blueprintjs/core';
+import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
 
+import TreeView from '../../components/TreeView';
 import {
   insertNote,
 } from '../../actions';
 
-import { Container, Header, HeaderButton, Tree, DirRoot, ChildDir } from './styled';
+import { Container, Header, HeaderButton, Tree } from './styled';
 
 
 interface Props {
@@ -56,30 +56,13 @@ class Sidebar extends PureComponent<Props> {
     </Header>
   );
 
-  renderTreeView = () => {
-    const { dir } = this.props;
-    return dir.map((item: any) => (
-      <div key={item.id} style={{ position: 'relative' }}>
-        <DirRoot onContextMenu={this.showContextMenu}>
-          <Icon iconName="pt-icon-folder-open" />
-          {item.title}
-        </DirRoot>
-        {item.children && item.children.length > 0 && item.children.map((child: any) => (
-          <ChildDir>
-            <Icon iconName="pt-icon-folder-open" />
-            {child.title}
-          </ChildDir>
-        ))}
-      </div>
-    ));
-  }
-
   render() {
+    const { dir } = this.props;
     return (
       <Container>
         {this.renderHeader()}
         <Tree>
-          {this.renderTreeView()}
+          <TreeView childs={dir} level={0} />
         </Tree>
       </Container>
     );

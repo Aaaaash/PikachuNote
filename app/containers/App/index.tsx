@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { Position, Toaster, Intent } from '@blueprintjs/core';
 import styled from 'styled-components';
 
