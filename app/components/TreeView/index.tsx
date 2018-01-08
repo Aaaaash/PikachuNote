@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { Icon } from '@blueprintjs/core';
 
+import StateFulIcon from '../StatefulIcon';
 import { Directory } from '../../common/constants';
 
 const Dir = styled.div`
@@ -29,7 +30,16 @@ class TreeView extends PureComponent<Props> {
     return childs.map((subdir) => (
       <div key={subdir.id}>
         <Dir style={{ paddingLeft: `calc(${level} * 10px)` }}>
-          <Icon iconName="pt-icon-folder-open" />
+          <StateFulIcon
+            enableElement={<Icon iconName="pt-icon-caret-down" />}
+            enable={false}
+            disableElement={<Icon iconName="pt-icon-caret-right" />}
+          />
+          <StateFulIcon
+            enableElement={<Icon iconName="pt-icon-folder-open" />}
+            enable={false}
+            disableElement={<Icon iconName="pt-icon-folder-close" />}
+          />
           {subdir.title}
         </Dir>
         {subdir.children.length > 0 &&
