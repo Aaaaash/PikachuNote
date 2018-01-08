@@ -1,3 +1,5 @@
+import { Directory } from '../common/constants';
+
 interface ElectronWindow {
   [propName: string]: any;
 }
@@ -118,7 +120,7 @@ function deleteDatabaseByName(name: string): Promise<boolean> {
 function getDataById(dbName: string, storeName: string, id: string) {
   return new Promise((resolve, reject) => {
     createDatabaseByName(dbName)
-      .then((db) => {
+      .then((db: IDBDatabase) => {
         const tx: IDBTransaction = db.transaction(storeName, 'readonly');
         const store = tx.objectStore(storeName);
         const range = IDBKeyRange.only(id);
@@ -151,7 +153,7 @@ function getDataById(dbName: string, storeName: string, id: string) {
 function insertDataForSpecifiedStore(dbName: string, storeName: string, data: any) {
   return new Promise((resolve, reject) => {
     createDatabaseByName(dbName)
-      .then((db) => {
+      .then((db: IDBDatabase) => {
         const tx: IDBTransaction = db.transaction(storeName, 'readwrite');
         const store = tx.objectStore(storeName);
         const insertDataConnect: IDBRequest = store.add(data);
@@ -169,6 +171,37 @@ function insertDataForSpecifiedStore(dbName: string, storeName: string, data: an
   });
 }
 
+/**
+ * fetchAllDataByStoreName 根据store名获取所有数据
+ * @param dbName 数据库名
+ * @param storeName store名
+ */
+function fetchAllDataByStoreName(dbName: string, storeName: string) {
+  return new Promise((resolve, reject) => {
+    createDatabaseByName(dbName)
+      .then((db: IDBDatabase) => {
+        const tx: IDBTransaction = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        
+        let allData: Directory[] = [];
+        const storeConnect = store.openCursor();
+
+        storeConnect.addEventListener('success', (event: any) => {
+          const cursor = event.target.result;
+          if (cursor) {
+            allData.push(cursor.value);
+            cursor.continue();
+          }
+        });
+
+        tx.addEventListener('complete', (event: any) => {
+          db.close();
+          resolve(allData);
+        });
+      });
+  });
+}
+
 export {
   createDatabaseByName,
   injectIndexedDB,
@@ -177,4 +210,5 @@ export {
   deleteDatabaseByName,
   getDataById,
   insertDataForSpecifiedStore,
+  fetchAllDataByStoreName,
 };

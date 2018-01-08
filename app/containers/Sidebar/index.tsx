@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
 
+import { INDEXED_DATABASE_NAME } from '../../common/constants';
 import TreeView from '../../components/TreeView';
 import {
   insertNote,
 } from '../../actions';
-
+import { fetchAllDataByStoreName } from '../../utils/indexedDB';
 import { Container, Header, HeaderButton, Tree } from './styled';
 
 
@@ -19,6 +20,11 @@ class Sidebar extends PureComponent<Props> {
   state = {
     isContextMenuOpen: false
   };
+
+  async componentWillMount() {
+    const alldata = await fetchAllDataByStoreName(INDEXED_DATABASE_NAME, 'dirs');
+    console.log(alldata);
+  }
 
   handleInsertNote = () => {
     const { onInsertNewNote } = this.props;

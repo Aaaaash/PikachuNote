@@ -7,6 +7,9 @@ import { createBrowserHistory } from 'history';
 import Route from './routes';
 import './app.global.scss';
 
+import { isDataBasebeCreated } from './utils/indexedDB';
+import { INDEXED_DATABASE_NAME } from './common/constants';
+import initialDatabase from './initialDatabase';
 import configureStore from './configureStore';
 
 const initialState = {};
@@ -14,16 +17,25 @@ const initialState = {};
 const history = createBrowserHistory();
 const store = configureStore(initialState, history);
 
-render(
-  <AppContainer>
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Route />
-      </ConnectedRouter>
-    </Provider>
-  </AppContainer>,
-  document.getElementById('root')
-);
+isDataBasebeCreated(INDEXED_DATABASE_NAME)
+  .then((haveDb): any => {
+    if (!haveDb) {
+      return initialDatabase();
+    }
+    return null;
+  })
+  .then(() => {
+    render(
+      <AppContainer>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Route />
+          </ConnectedRouter>
+        </Provider>
+      </AppContainer>,
+      document.getElementById('root')
+    );
+  });
 
 if ((module as any).hot) {
   (module as any).hot.accept('./routes', () => {
