@@ -1,4 +1,4 @@
-import { injectIndexedDB, createIndexDBObjectStore, insertDataForSpecifiedStore } from './utils/indexedDB';
+import { injectIndexedDB, createIndexDBObjectStore, insertDataForSpecifiedStore } from './api/indexdb';
 import { INDEXED_DATABASE_NAME, INITIAL_DIR_STORE_PARAMS, TREE_DIRTORY_NAME } from './common/constants';
 import generateUUID from './utils/guid';
 

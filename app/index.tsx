@@ -7,7 +7,7 @@ import { createBrowserHistory } from 'history';
 import Route from './routes';
 import './app.global.scss';
 
-import { isDataBasebeCreated } from './utils/indexedDB';
+import { isDataBasebeCreated } from './api/indexdb';
 import { INDEXED_DATABASE_NAME } from './common/constants';
 import initialDatabase from './initialDatabase';
 import configureStore from './configureStore';

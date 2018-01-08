@@ -2,7 +2,7 @@ import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs';
 import 'rxjs';
 
-import { fetchAllDataByStoreName } from './utils/indexedDB';
+import { fetchAllDataByStoreName } from './api/indexdb';
 import { fetchAllDataComplete } from './actions';
 import { Directory, ElectronAction } from './common/constants';
 import { FETCH_ALL_DIRS } from './constants';
