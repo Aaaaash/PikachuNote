@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
 
-import { INDEXED_DATABASE_NAME } from '../../common/constants';
 import TreeView from '../../components/TreeView';
 import {
-  insertNote,
+  insertNote, fetchAllData,
 } from '../../actions';
-import { fetchAllDataByStoreName } from '../../utils/indexedDB';
 import { Container, Header, HeaderButton, Tree } from './styled';
-
+import { Directory, INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
 
 interface Props {
+  dir: Directory[];
+  onFetchAllDir: (dbName: string, storeName: string) => {};
   [propName: string]: any;
 }
 
@@ -21,9 +21,8 @@ class Sidebar extends PureComponent<Props> {
     isContextMenuOpen: false
   };
 
-  async componentWillMount() {
-    const alldata = await fetchAllDataByStoreName(INDEXED_DATABASE_NAME, 'dirs');
-    console.log(alldata);
+  componentWillMount() {
+    this.props.onFetchAllDir(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME);
   }
 
   handleInsertNote = () => {
@@ -81,6 +80,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   onInsertNewNote: () => dispatch(insertNote(0, 'keke')),
+  onFetchAllDir: (dbName: string, storeName: string) => dispatch(fetchAllData(dbName, storeName)),
 });
 
 function mergePropss(stateProps: Object, dispatchProps: Object, ownProps: Object) {

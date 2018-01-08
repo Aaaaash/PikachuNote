@@ -1,4 +1,5 @@
 import { routerMiddleware }  from 'react-router-redux';
+import { createEpicMiddleware } from 'redux-observable';
 import { History } from 'history';
 import {
   applyMiddleware,
@@ -9,10 +10,14 @@ import {
 } from 'redux';
 
 import createReducers from './reducers';
+import { fetchDirectory } from './epics';
 
 export default (initialState: Object | void, history: History) => {
+  const epicMiddleware = createEpicMiddleware(fetchDirectory);
+
   const middlewares: Middleware[] = [
     routerMiddleware(history),
+    epicMiddleware,
   ];
 
   const enhaners: GenericStoreEnhancer[] = [

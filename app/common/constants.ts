@@ -12,10 +12,13 @@ export const INITIAL_DIR_STORE_PARAMS = {
   ]
 };
 
-export const INSERT_NOTE = 'app/treeView/INSERT_NOTE';
-
 export interface Directory {
   id: string;
   title: string;
   children: Directory[];
 }
+
+export interface ElectronAction {
+  type: string;
+  [propName: string]: any;
+};

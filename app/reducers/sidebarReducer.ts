@@ -1,19 +1,9 @@
 import {
-  INSERT_NOTE
-} from '../common/constants';
+  INSERT_NOTE, FETCH_ALL_DIRS_COMPLETE
+} from '../constants';
 
 const initialState = {
-  dir: [
-    {
-      id: 0,
-      title: '主目录',
-      children: [
-        { id: 'qwertdjlk-dadjak', title: 'Hello World!', children: [
-          { id: 'dasdjsakl', title: '子目录！', children: [] }
-        ] },
-      ],
-    }
-  ],
+  dir: [],
 };
 
 function reducer(state = initialState, action: any) {
@@ -21,6 +11,8 @@ function reducer(state = initialState, action: any) {
     case INSERT_NOTE:
       console.log('?');
       return state;
+    case FETCH_ALL_DIRS_COMPLETE:
+      return { ...state, dir: action.data };
     default:
       return state;
   }
