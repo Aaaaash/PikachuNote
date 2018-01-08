@@ -165,8 +165,8 @@ function insertDataForSpecifiedStore(dbName: string, storeName: string, data: an
           db.close();
           resolve(result);
         });
-      })
-  })
+      });
+  });
 }
 
 export {

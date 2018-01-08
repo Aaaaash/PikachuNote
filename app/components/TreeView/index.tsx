@@ -28,22 +28,18 @@ class TreeView extends PureComponent<Props> {
     const { childs, level } = this.props;
     return childs.map((subdir) => (
       <div key={subdir.id}>
-        <Dir>
+        <Dir style={{ paddingLeft: `calc(${level} * 10px)` }}>
           <Icon iconName="pt-icon-folder-open" />
           {subdir.title}
         </Dir>
-        {subdir.children.length > 0 && <TreeView childs={subdir.children} level={level + 1} />}
+        {subdir.children.length > 0 &&
+            <TreeView childs={subdir.children} level={level + 1} />}
       </div>
     ));
   }
 
   render() {
-    const { level } = this.props;
-    return (
-      <div style={{ paddingLeft: `calc(${level} * 5px)` }}>
-        {this.renderTreeView()}
-      </div>
-    );
+    return <div> {this.renderTreeView()} </div>;
   }
 }
 
