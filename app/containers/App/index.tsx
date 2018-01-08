@@ -35,6 +35,7 @@ interface ElectronWindow {
 
 export default class App extends PureComponent<Props> {
   toaster: any;
+
   async componentDidMount() {
     // 测试阶段先主动删除
     await deleteDatabaseByName(INDEXED_DATABASE_NAME);
@@ -43,7 +44,8 @@ export default class App extends PureComponent<Props> {
       await injectIndexedDB(INDEXED_DATABASE_NAME);
       /* eslint-disable */
       if (
-        (window as ElectronWindow).__PIKACHU_NOTE_INDEXEDDB_DATABASE__ && (window as ElectronWindow).__PIKACHU_NOTE_INDEXEDDB_DATABASE__.transaction
+        (window as ElectronWindow).__PIKACHU_NOTE_INDEXEDDB_DATABASE__
+        && (window as ElectronWindow).__PIKACHU_NOTE_INDEXEDDB_DATABASE__.transaction
       ) {
         this.handleShowToaster('数据库创建成功', Intent.SUCCESS);
       }
@@ -69,7 +71,7 @@ export default class App extends PureComponent<Props> {
     }
   }
 
-  handleShowToaster = (message: string, intent: Intent, timeout = 1000) => {
+  handleShowToaster = (message: string, intent: Intent, timeout: number = 1000) => {
     this.toaster.show({
       message,
       timeout,

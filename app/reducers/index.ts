@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 
-import treeViewReducer from './treeviewReducer';
+import sidebarReducer from './sidebarReducer';
 
-const rootReducer = combineReducers({
-  router,
-  treeViewReducer,
-});
-
-export default rootReducer;
+export default function createReducers() {
+  return combineReducers({
+    router,
+    sidebarReducer,
+  });
+};

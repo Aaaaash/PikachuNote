@@ -70,7 +70,7 @@ class Sidebar extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state: any) => ({
-  dir: state.treeViewReducer.dir,
+  dir: state.sidebarReducer.dir,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

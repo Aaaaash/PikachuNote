@@ -3,11 +3,16 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
+import { createBrowserHistory } from 'history';
 import Route from './routes';
 import './app.global.scss';
 
-import { configureStore, history } from './store/configureStore.development';
-const store = configureStore();
+import configureStore from './configureStore';
+
+const initialState = {};
+
+const history = createBrowserHistory();
+const store = configureStore(initialState, history);
 
 render(
   <AppContainer>
