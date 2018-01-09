@@ -4,7 +4,7 @@ import 'rxjs';
 
 import { fetchAllDataByStoreName } from './api/indexdb';
 import { fetchAllDataComplete } from './actions';
-import { Directory, ElectronAction } from './common/constants';
+import { Directory, ElectronAction } from './types';
 import { FETCH_ALL_DIRS } from './constants';
 
 const fetchDirectory = (action$: ActionsObservable<ElectronAction>) => {

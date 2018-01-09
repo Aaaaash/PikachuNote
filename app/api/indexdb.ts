@@ -1,4 +1,4 @@
-import { Directory } from '../common/constants';
+import { Directory } from '../types';
 
 interface ElectronWindow {
   [propName: string]: any;

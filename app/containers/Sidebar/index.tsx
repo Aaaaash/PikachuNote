@@ -8,7 +8,8 @@ import {
   insertNote, fetchAllData,
 } from '../../actions';
 import { Container, Header, HeaderButton, Tree } from './styled';
-import { Directory, INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
+import { INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
+import { Directory } from '../../types';
 
 interface Props {
   dir: Directory[];

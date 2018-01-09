@@ -11,14 +11,3 @@ export const INITIAL_DIR_STORE_PARAMS = {
     { name: 'titleIndex', key: 'title', options: { unqiue: false, mulitEntry: false } }
   ]
 };
-
-export interface Directory {
-  id: string;
-  title: string;
-  children: Directory[];
-}
-
-export interface ElectronAction {
-  type: string;
-  [propName: string]: any;
-};

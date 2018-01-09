@@ -1,7 +1,7 @@
 import {
   INSERT_NOTE, FETCH_ALL_DIRS, FETCH_ALL_DIRS_COMPLETE,
 } from '../constants';
-import { Directory } from '../common/constants';
+import { Directory } from '../types';
 
 
 export function insertNote(id: any, payload: any) {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Icon } from '@blueprintjs/core';
 
 import StateFulIcon from '../StatefulIcon';
-import { Directory } from '../../common/constants';
+import { Directory } from '../../types';
 
 const Dir = styled.div`
   height: 36px;
