@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Sidebar from '../Sidebar';
@@ -22,14 +22,10 @@ const Content = styled.div`
   background-color: #fff;
 `;
 
-export default class HomePage extends PureComponent {
-  render() {
-    return (
-      <Container>
-        <Sidebar />
-        <Detail />
-        <Content />
-      </Container>
-    );
-  }
-}
+export default () => (
+  <Container>
+    <Sidebar />
+    <Detail />
+    <Content />
+  </Container>
+);

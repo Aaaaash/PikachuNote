@@ -148,7 +148,7 @@ function getDataById(dbName: string, storeName: string, id: string) {
   });
 }
 
-function getNotesByStoreID(id: string): Promise<DirDetails[]> {
+function getNotesByDirID(id: string): Promise<DirDetails[]> {
   return new Promise((resolve, reject) => {
     createDatabaseByName(INDEXED_DATABASE_NAME)
       .then((db: IDBDatabase) => {
@@ -241,5 +241,5 @@ export {
   getDataById,
   insertDataForSpecifiedStore,
   fetchAllDataByStoreName,
-  getNotesByStoreID,
+  getNotesByDirID,
 };

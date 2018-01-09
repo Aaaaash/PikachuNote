@@ -2,7 +2,7 @@ import { ActionsObservable, combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs';
 import 'rxjs';
 
-import { fetchAllDataByStoreName, getNotesByStoreID } from './api/indexdb';
+import { fetchAllDataByStoreName, getNotesByDirID } from './api/indexdb';
 import { fetchAllDataComplete, fetchNotesByStoreID, fetchNotesByStroeIDSuc } from './actions';
 import { Directory, ElectronAction, Note } from './types';
 import { FETCH_ALL_DIRS, FETCH_DIRECTORY_NOTES } from './constants';
@@ -23,7 +23,7 @@ const fetchDirectoryEpic = (action$: ActionsObservable<ElectronAction>) => {
 const fetchNotesByStoreIDEpic = (action$: ActionsObservable<ElectronAction>) => {
   return action$.ofType(FETCH_DIRECTORY_NOTES)
     .flatMap((action: ElectronAction) =>
-      Observable.fromPromise(getNotesByStoreID(action.storeID))
+      Observable.fromPromise(getNotesByDirID(action.storeID))
       .map((response: Note[]) => fetchNotesByStroeIDSuc(response))
     )
 }
