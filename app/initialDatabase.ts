@@ -10,8 +10,8 @@ async function initialDatabase() {
     id: MAIN_DIR_ID,
     title: '主目录',
     children: [
-      { id: generateUUID(), title: '子目录', children: [] },
-      { id: generateUUID(), title: '子目录2', children: [] }
+      { id: generateUUID(), title: '子目录', children: [], belong: MAIN_DIR_ID },
+      { id: generateUUID(), title: '子目录2', children: [], belong: MAIN_DIR_ID }
     ],
   });
   await createIndexDBObjectStore(INITIAL_NOTES_STORE_PARAMS);

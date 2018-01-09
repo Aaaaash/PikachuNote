@@ -1,8 +1,10 @@
 import { Directory, DirDetails } from '../types';
 import {
   INDEXED_DATABASE_NAME,
+  TREE_DIRTORY_NAME,
   NOTES_STORE_NAME,
 } from '../common/constants';
+import findSubDirById from '../utils/findSubDir';
 
 interface ElectronWindow {
   [propName: string]: any;
@@ -152,12 +154,11 @@ function getNotesByDirID(id: string): Promise<DirDetails[]> {
   return new Promise((resolve, reject) => {
     createDatabaseByName(INDEXED_DATABASE_NAME)
       .then((db: IDBDatabase) => {
-        const tx: IDBTransaction = db.transaction(NOTES_STORE_NAME, 'readonly');
-        const store = tx.objectStore(NOTES_STORE_NAME);
-
         let allData: DirDetails[] = [];
-        const storeConnect = store.openCursor();
-        storeConnect.addEventListener('success', (event: any) => {
+        const notes_tx: IDBTransaction = db.transaction(NOTES_STORE_NAME, 'readonly');
+        const notes_store = notes_tx.objectStore(NOTES_STORE_NAME);
+        const notesStoreConnect = notes_store.openCursor();
+        notesStoreConnect.addEventListener('success', (event: any) => {
           const cursor = event.target.result;
           if (cursor) {
             const note: DirDetails = cursor.value;
@@ -167,8 +168,20 @@ function getNotesByDirID(id: string): Promise<DirDetails[]> {
             }
           }
         });
-        tx.addEventListener('complete', () => {
-          db.close();
+
+        const dirs_tx: IDBTransaction = db.transaction(TREE_DIRTORY_NAME, 'readonly');
+        const dirs_store = dirs_tx.objectStore(TREE_DIRTORY_NAME);
+        const dirsStoreConnect = dirs_store.openCursor();
+        dirsStoreConnect.addEventListener('success', (event: any) => {
+          const cursor = event.target.result;
+          if (cursor) {
+            const dir: DirDetails = cursor.value;
+            const result = findSubDirById(dir, id);
+            allData = allData.concat(result);
+          }
+        });
+
+        dirs_tx.addEventListener('complete', (event: any) => {
           resolve(allData);
         });
       });

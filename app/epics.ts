@@ -1,6 +1,5 @@
 import { ActionsObservable, combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs';
-import 'rxjs';
 
 import { fetchAllDataByStoreName, getNotesByDirID } from './api/indexdb';
 import { fetchAllDataComplete, fetchNotesByStoreID, fetchNotesByStroeIDSuc } from './actions';

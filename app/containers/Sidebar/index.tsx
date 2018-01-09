@@ -9,11 +9,10 @@ import {
 } from '../../actions';
 import { Container, Header, HeaderButton, Tree } from './styled';
 import { INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
-import { Directory, DirDetails } from '../../types';
+import { Directory } from '../../types';
 
 interface Props {
   dir: Directory[];
-  dirDetails: DirDetails[];
   currentDir: string;
   onFetchAllDir: (dbName: string, storeName: string) => {};
   onFetchNotesByStoreID: (storeName: string) => {};
@@ -49,8 +48,7 @@ class Sidebar extends PureComponent<Props> {
   );
 
   render() {
-    const { dir, dirDetails, onSetCurrentDir, currentDir } = this.props;
-    console.log(dirDetails);
+    const { dir, onSetCurrentDir, currentDir } = this.props;
     return (
       <Container>
         {this.renderHeader()}
@@ -64,7 +62,6 @@ class Sidebar extends PureComponent<Props> {
 
 const mapStateToProps = (state: any) => ({
   dir: state.sidebar.dir,
-  dirDetails: state.sidebar.dirDetails,
   currentDir: state.sidebar.currentDir,
 });
 
