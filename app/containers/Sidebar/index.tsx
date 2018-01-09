@@ -4,15 +4,17 @@ import { compose } from 'redux';
 
 import TreeView from '../../components/TreeView';
 import {
-  insertNote, fetchAllData,
+  fetchAllData,
 } from '../../actions';
 import { Container, Header, HeaderButton, Tree } from './styled';
 import { INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
-import { Directory } from '../../types';
+import { Directory, DirDetails } from '../../types';
 
 interface Props {
   dir: Directory[];
+  dirDetails: DirDetails[];
   onFetchAllDir: (dbName: string, storeName: string) => {};
+  onFetchNotesByStoreID: (storeName: string) => {};
   [propName: string]: any;
 }
 
@@ -44,7 +46,8 @@ class Sidebar extends PureComponent<Props> {
   );
 
   render() {
-    const { dir } = this.props;
+    const { dir, dirDetails } = this.props;
+    console.log(dirDetails);
     return (
       <Container>
         {this.renderHeader()}
@@ -58,10 +61,10 @@ class Sidebar extends PureComponent<Props> {
 
 const mapStateToProps = (state: any) => ({
   dir: state.sidebarReducer.dir,
+  dirDetails: state.sidebarReducer.dirDetails,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  onInsertNewNote: () => dispatch(insertNote(0, 'keke')),
   onFetchAllDir: (dbName: string, storeName: string) => dispatch(fetchAllData(dbName, storeName)),
 });
 

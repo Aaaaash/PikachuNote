@@ -10,10 +10,10 @@ import {
 } from 'redux';
 
 import createReducers from './reducers';
-import { fetchDirectory } from './epics';
+import rootEpics from './epics';
 
 export default (initialState: Object | void, history: History) => {
-  const epicMiddleware = createEpicMiddleware(fetchDirectory);
+  const epicMiddleware = createEpicMiddleware(rootEpics);
 
   const middlewares: Middleware[] = [
     routerMiddleware(history),

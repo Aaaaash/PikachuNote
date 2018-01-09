@@ -1,20 +1,34 @@
-import { ActionsObservable } from 'redux-observable';
+import { ActionsObservable, combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs';
 import 'rxjs';
 
-import { fetchAllDataByStoreName } from './api/indexdb';
-import { fetchAllDataComplete } from './actions';
-import { Directory, ElectronAction } from './types';
-import { FETCH_ALL_DIRS } from './constants';
+import { fetchAllDataByStoreName, getNotesByStoreID } from './api/indexdb';
+import { fetchAllDataComplete, fetchNotesByStoreID, fetchNotesByStroeIDSuc } from './actions';
+import { Directory, ElectronAction, Note } from './types';
+import { FETCH_ALL_DIRS, FETCH_DIRECTORY_NOTES } from './constants';
 
-const fetchDirectory = (action$: ActionsObservable<ElectronAction>) => {
+const fetchDirectoryEpic = (action$: ActionsObservable<ElectronAction>) => {
   return action$.ofType(FETCH_ALL_DIRS)
-    .mergeMap((action: ElectronAction) =>
+    .switchMap((action: ElectronAction) =>
       Observable.fromPromise(fetchAllDataByStoreName(action.dbName, action.storeName))
-      .map((response: Directory[]) => fetchAllDataComplete(response))
-    );
+      .flatMap((response: Directory[]) =>
+        Observable.concat(
+          Observable.of(fetchAllDataComplete(response)),
+          Observable.of(fetchNotesByStoreID(response[0]['id']))
+        )
+      )
+    )
 }
 
-export {
-  fetchDirectory,
-};
+const fetchNotesByStoreIDEpic = (action$: ActionsObservable<ElectronAction>) => {
+  return action$.ofType(FETCH_DIRECTORY_NOTES)
+    .flatMap((action: ElectronAction) =>
+      Observable.fromPromise(getNotesByStoreID(action.storeID))
+      .map((response: Note[]) => fetchNotesByStroeIDSuc(response))
+    )
+}
+
+export default combineEpics(
+  fetchDirectoryEpic,
+  fetchNotesByStoreIDEpic
+);

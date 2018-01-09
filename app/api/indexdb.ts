@@ -1,4 +1,8 @@
-import { Directory } from '../types';
+import { Directory, DirDetails } from '../types';
+import {
+  INDEXED_DATABASE_NAME,
+  NOTES_STORE_NAME,
+} from '../common/constants';
 
 interface ElectronWindow {
   [propName: string]: any;
@@ -144,6 +148,32 @@ function getDataById(dbName: string, storeName: string, id: string) {
   });
 }
 
+function getNotesByStoreID(id: string): Promise<DirDetails[]> {
+  return new Promise((resolve, reject) => {
+    createDatabaseByName(INDEXED_DATABASE_NAME)
+      .then((db: IDBDatabase) => {
+        const tx: IDBTransaction = db.transaction(NOTES_STORE_NAME, 'readonly');
+        const store = tx.objectStore(NOTES_STORE_NAME);
+
+        let allData: DirDetails[] = [];
+        const storeConnect = store.openCursor();
+        storeConnect.addEventListener('success', (event: any) => {
+          const cursor = event.target.result;
+          if (cursor) {
+            const note: DirDetails = cursor.value;
+            if (note.belong === id) {
+              allData.push(cursor.value);
+              cursor.continue();
+            }
+          }
+        });
+        tx.addEventListener('complete', () => {
+          db.close();
+          resolve(allData);
+        });
+      });
+  });
+}
 /**
  * insertDataForSpecifiedStore 插入数据到指定store中
  * @param dbName 数据库名
@@ -211,4 +241,5 @@ export {
   getDataById,
   insertDataForSpecifiedStore,
   fetchAllDataByStoreName,
+  getNotesByStoreID,
 };

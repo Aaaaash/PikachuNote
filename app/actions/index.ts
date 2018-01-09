@@ -1,7 +1,10 @@
 import {
-  INSERT_NOTE, FETCH_ALL_DIRS, FETCH_ALL_DIRS_COMPLETE,
+  INSERT_NOTE, FETCH_ALL_DIRS,
+  FETCH_ALL_DIRS_COMPLETE,
+  FETCH_DIRECTORY_NOTES,
+  FETCH_DIRECTORY_NOTES_COMPLETE,
 } from '../constants';
-import { Directory } from '../types';
+import { Directory, DirDetails } from '../types';
 
 
 export function insertNote(id: any, payload: any) {
@@ -23,6 +26,20 @@ export function fetchAllData(dbName: string, storeName: string) {
 export function fetchAllDataComplete(data: Directory[]) {
   return {
     type: FETCH_ALL_DIRS_COMPLETE,
+    data,
+  };
+}
+
+export function fetchNotesByStoreID(storeID: string) {
+  return {
+    type: FETCH_DIRECTORY_NOTES,
+    storeID,
+  };
+}
+
+export function fetchNotesByStroeIDSuc(data: DirDetails[]) {
+  return {
+    type: FETCH_DIRECTORY_NOTES_COMPLETE,
     data,
   };
 }
