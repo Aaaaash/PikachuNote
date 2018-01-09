@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 
-import sidebarReducer from './sidebarReducer';
+import sidebar from './sidebarReducer';
 
 export default function createReducers() {
   return combineReducers({
     router,
-    sidebarReducer,
+    sidebar,
   });
 };

@@ -23,6 +23,9 @@ const Dir = styled.div`
 interface Props {
   childs: Directory[];
   level: number;
+  current: string;
+  onSetCurrentDir: (id: string) => {};
+  [propName: string]: any;
 }
 
 interface State {
@@ -75,19 +78,23 @@ class TreeView extends PureComponent<Props, State> {
 
   handleDirClick = (id: string): void => {
     const { dirState } = this.state;
+    this.props.onSetCurrentDir(id);
     this.setState({
       dirState: { ...dirState, [id]: !dirState[id] },
     })
   }
 
   renderTreeView = (): any => {
-    const { childs, level } = this.props;
+    const { childs, level, onSetCurrentDir, current } = this.props;
     const { dirState } = this.state;
     return childs.map((subdir) => (
       <div key={subdir.id}>
         <Dir
           onContextMenu={this.showContextMenu}
-          style={{ paddingLeft: `calc(${level} * 10px)` }}
+          style={{
+            paddingLeft: `calc(${level} * 10px)`,
+            backgroundColor: current === subdir.id && 'rgba(167, 182, 194, 0.3)',
+          }}
           onClick={() => this.handleDirClick(subdir.id)}
         >
           <StateFulIcon
@@ -103,7 +110,13 @@ class TreeView extends PureComponent<Props, State> {
           {subdir.title}
         </Dir>
         {subdir.children.length > 0 && dirState[subdir.id] &&
-            <TreeView childs={subdir.children} level={level + 1} />}
+            <TreeView
+              childs={subdir.children}
+              level={level + 1}
+              onSetCurrentDir={onSetCurrentDir}
+              current={current}
+            />
+        }
       </div>
     ));
   }

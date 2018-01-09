@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import TreeView from '../../components/TreeView';
 import {
   fetchAllData,
+  setCurrentDir,
 } from '../../actions';
 import { Container, Header, HeaderButton, Tree } from './styled';
 import { INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
@@ -13,8 +14,10 @@ import { Directory, DirDetails } from '../../types';
 interface Props {
   dir: Directory[];
   dirDetails: DirDetails[];
+  currentDir: string;
   onFetchAllDir: (dbName: string, storeName: string) => {};
   onFetchNotesByStoreID: (storeName: string) => {};
+  onSetCurrentDir: (id: string) => {};
   [propName: string]: any;
 }
 
@@ -46,13 +49,13 @@ class Sidebar extends PureComponent<Props> {
   );
 
   render() {
-    const { dir, dirDetails } = this.props;
+    const { dir, dirDetails, onSetCurrentDir, currentDir } = this.props;
     console.log(dirDetails);
     return (
       <Container>
         {this.renderHeader()}
         <Tree>
-          <TreeView childs={dir} level={0} />
+          <TreeView childs={dir} level={0} onSetCurrentDir={onSetCurrentDir} current={currentDir} />
         </Tree>
       </Container>
     );
@@ -60,12 +63,14 @@ class Sidebar extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state: any) => ({
-  dir: state.sidebarReducer.dir,
-  dirDetails: state.sidebarReducer.dirDetails,
+  dir: state.sidebar.dir,
+  dirDetails: state.sidebar.dirDetails,
+  currentDir: state.sidebar.currentDir,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   onFetchAllDir: (dbName: string, storeName: string) => dispatch(fetchAllData(dbName, storeName)),
+  onSetCurrentDir: (id: string) => dispatch(setCurrentDir(id)),
 });
 
 function mergePropss(stateProps: Object, dispatchProps: Object, ownProps: Object) {
