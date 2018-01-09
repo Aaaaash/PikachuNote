@@ -8,7 +8,10 @@ async function initialDatabase() {
   await insertDataForSpecifiedStore(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME, {
     id: generateUUID(),
     title: '主目录',
-    children: [],
+    children: [
+      { id: generateUUID(), title: '子目录', children: [] },
+      { id: generateUUID(), title: '子目录2', children: [] }
+    ],
   });
   return true;
 }

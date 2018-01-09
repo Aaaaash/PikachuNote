@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
 
 import TreeView from '../../components/TreeView';
 import {
@@ -18,9 +17,6 @@ interface Props {
 }
 
 class Sidebar extends PureComponent<Props> {
-  state = {
-    isContextMenuOpen: false
-  };
 
   componentWillMount() {
     this.props.onFetchAllDir(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME);
@@ -30,21 +26,6 @@ class Sidebar extends PureComponent<Props> {
     const { onInsertNewNote } = this.props;
     onInsertNewNote();
   }
-
-  showContextMenu = (e: any) => {
-    e.preventDefault();
-    ContextMenu.show(
-      <Menu>
-        <MenuItem iconName="pt-icon-add" text="新建">
-          <MenuItem iconName="pt-icon-document" text="记事本" />
-          <MenuItem iconName="pt-icon-folder-open" text="文件夹" />
-        </MenuItem>
-      </Menu>,
-      { left: e.clientX, top: e.clientY },
-      () => this.setState({ isContextMenuOpen: false })
-    );
-    this.setState({ isContextMenuOpen: true });
-  };
 
   renderHeader = () => (
     <Header>
