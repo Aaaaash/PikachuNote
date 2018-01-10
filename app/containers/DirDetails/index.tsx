@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, MouseEvent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { ContextMenu, Menu, MenuItem, Icon, Tag, NonIdealState } from '@blueprintjs/core';
+import { ContextMenu, Menu, MenuItem, Icon, Tag, NonIdealState, EditableText } from '@blueprintjs/core';
 import moment from 'moment';
 
 import { setActiveItem } from '../../actions';
@@ -31,6 +31,9 @@ const Titlt = styled.div`
   display: flex;
   height: 30px;
   align-items: center;
+  & > span {
+    padding-right: 10px;
+  }
 `;
 
 const AllTag = styled.p`
@@ -73,11 +76,16 @@ class DirDetailsView extends PureComponent<Props, State> {
     />
   )
 
-  showContextMenu = (e: any) => {
+  insertNewNote = (id: string) => {
+    console.log(id);
+    // TODO
+  }
+
+  showContextMenu = (e: MouseEvent<any>, id: string) => {
     e.preventDefault();
     ContextMenu.show(
       <Menu>
-        <MenuItem iconName="pt-icon-document" text="新建笔记" />
+        <MenuItem iconName="pt-icon-document" text="新建笔记" onClick={() => this.insertNewNote(id)} />
         <MenuItem iconName="pt-icon-folder-close" text="新建文件夹" />
       </Menu>,
       { left: e.clientX, top: e.clientY },
@@ -96,7 +104,7 @@ class DirDetailsView extends PureComponent<Props, State> {
     return dirDetails.map((child: DirDetails) => (
       <Child
         key={child.id}
-        onContextMenu={this.showContextMenu}
+        onContextMenu={(e: MouseEvent<any>) => this.showContextMenu(e, child.id)}
         onClick={() => this.handleChildClick(child.id)}
         style={{ backgroundColor: active === child.id && 'rgba(191,204,214,.4)' }}
       >
@@ -104,7 +112,7 @@ class DirDetailsView extends PureComponent<Props, State> {
           {child.type === 'CATALOG'
             ? <Icon iconName="pt-icon-folder-close" />
             : <Icon iconName="pt-icon-document" />}
-          {child.title}
+          <EditableText value={child.title} />
           <AllTag>
             {child.tags
               && child.tags.map((tag) => (

@@ -4,6 +4,7 @@ import {
   SET_CURRENT_DIRECTORY,
   SET_ACTIVE_ITEM,
 } from '../constants';
+import { ElectronAction } from '../types';
 
 const initialState = {
   dir: [],
@@ -12,7 +13,7 @@ const initialState = {
   active: '',
 };
 
-function reducer(state = initialState, action: any) {
+function reducer(state = initialState, action: ElectronAction) {
   switch (action.type) {
     case FETCH_ALL_DIRS_COMPLETE:
       return { ...state, dir: action.data };
