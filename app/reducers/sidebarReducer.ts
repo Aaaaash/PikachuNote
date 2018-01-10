@@ -18,7 +18,7 @@ function reducer(state = initialState, action: any) {
       console.log(action.data);
       return { ...state, dirDetails: action.data };
     case SET_CURRENT_DIRECTORY:
-      return { ...state, currentDir: action.id };
+      return { ...state, currentDir: action.storeID };
     default:
       return state;
   }

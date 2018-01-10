@@ -54,8 +54,8 @@ class TreeView extends PureComponent<Props, State> {
     ContextMenu.show(
       <Menu>
         <MenuItem iconName="pt-icon-add" text="新建">
-          <MenuItem iconName="pt-icon-document" text="记事本" />
-          <MenuItem iconName="pt-icon-folder-open" text="文件夹" />
+          <MenuItem iconName="pt-icon-document" text="笔记" />
+          <MenuItem iconName="pt-icon-folder-close" text="文件夹" />
         </MenuItem>
       </Menu>,
       { left: e.clientX, top: e.clientY },
@@ -77,7 +77,10 @@ class TreeView extends PureComponent<Props, State> {
 
   handleDirClick = (id: string): void => {
     const { dirState } = this.state;
-    this.props.onSetCurrentDir(id);
+    const { current } = this.props;
+    if (current !== id) {
+      this.props.onSetCurrentDir(id);
+    }
     this.setState({
       dirState: { ...dirState, [id]: !dirState[id] },
     })
@@ -89,7 +92,7 @@ class TreeView extends PureComponent<Props, State> {
     return childs.map((subdir) => (
       <div key={subdir.id}>
         <Dir
-          onContextMenu={this.showContextMenu}
+          onContextMenu={current === subdir.id ? this.showContextMenu : () => {}}
           style={{
             paddingLeft: `calc(${level} * 10px)`,
             backgroundColor: current === subdir.id && 'rgba(167, 182, 194, 0.3)',

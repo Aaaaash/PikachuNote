@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { fetchAllDataByStoreName, getNotesByDirID } from './api/indexdb';
 import { fetchAllDataComplete, fetchNotesByStoreID, fetchNotesByStroeIDSuc } from './actions';
 import { Directory, ElectronAction, Note } from './types';
-import { FETCH_ALL_DIRS, FETCH_DIRECTORY_NOTES } from './constants';
+import { FETCH_ALL_DIRS, FETCH_DIRECTORY_NOTES, SET_CURRENT_DIRECTORY } from './constants';
 
 const fetchDirectoryEpic = (action$: ActionsObservable<ElectronAction>) => {
   return action$.ofType(FETCH_ALL_DIRS)
@@ -20,7 +20,7 @@ const fetchDirectoryEpic = (action$: ActionsObservable<ElectronAction>) => {
 }
 
 const fetchNotesByStoreIDEpic = (action$: ActionsObservable<ElectronAction>) => {
-  return action$.ofType(FETCH_DIRECTORY_NOTES)
+  return action$.filter(action => action.type === FETCH_DIRECTORY_NOTES || action.type === SET_CURRENT_DIRECTORY)
     .flatMap((action: ElectronAction) =>
       Observable.fromPromise(getNotesByDirID(action.storeID))
       .map((response: Note[]) => fetchNotesByStroeIDSuc(response))

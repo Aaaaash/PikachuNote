@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Intent } from '@blueprintjs/core';
 import moment from 'moment';
 
 import { DirDetails } from '../../types';
@@ -52,8 +52,8 @@ class DirDetailsView extends PureComponent<Props> {
       <Child key={child.id}>
         <Titlt>
           {child.type === 'CATALOG'
-            ? <Icon iconName="pt-icon-folder-close" />
-            : <Icon iconName="pt-icon-document" />}
+            ? <Icon iconName="pt-icon-folder-close" intent={Intent.PRIMARY} />
+            : <Icon iconName="pt-icon-document" intent={Intent.PRIMARY} />}
           {child.title}
         </Titlt>
         <About>

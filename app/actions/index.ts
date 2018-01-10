@@ -45,9 +45,9 @@ export function fetchNotesByStroeIDSuc(data: DirDetails[]) {
   };
 }
 
-export function setCurrentDir(id: string) {
+export function setCurrentDir(storeID: string) {
   return {
     type: SET_CURRENT_DIRECTORY,
-    id,
+    storeID,
   };
 }
