@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { ContextMenu, Menu, MenuItem, Icon, Intent } from '@blueprintjs/core';
+import { Icon, Intent } from '@blueprintjs/core';
 
 import StateFulIcon from '../StatefulIcon';
 import { Directory } from '../../types';
@@ -29,13 +29,11 @@ interface Props {
 
 interface State {
   dirState: object;
-  isContextMenuOpen: boolean;
 }
 
 class TreeView extends PureComponent<Props, State> {
   state = {
     dirState: {},
-    isContextMenuOpen: false,
   }
 
   componentWillMount() {
@@ -48,21 +46,6 @@ class TreeView extends PureComponent<Props, State> {
       this.computedDirState(nextProps.childs);
     }
   }
-
-  showContextMenu = (e: any) => {
-    e.preventDefault();
-    ContextMenu.show(
-      <Menu>
-        <MenuItem iconName="pt-icon-add" text="新建">
-          <MenuItem iconName="pt-icon-document" text="笔记" />
-          <MenuItem iconName="pt-icon-folder-close" text="文件夹" />
-        </MenuItem>
-      </Menu>,
-      { left: e.clientX, top: e.clientY },
-      () => this.setState({ isContextMenuOpen: false })
-    );
-    this.setState({ isContextMenuOpen: true });
-  };
 
   computedDirState(childs: Directory[]): void {
     const { dirState } = this.state;
@@ -92,7 +75,6 @@ class TreeView extends PureComponent<Props, State> {
     return childs.map((subdir) => (
       <div key={subdir.id}>
         <Dir
-          onContextMenu={current === subdir.id ? this.showContextMenu : () => {}}
           style={{
             paddingLeft: `calc(${level} * 10px)`,
             backgroundColor: current === subdir.id && 'rgba(167, 182, 194, 0.3)',

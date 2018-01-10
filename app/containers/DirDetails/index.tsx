@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Icon, Tag } from '@blueprintjs/core';
+import { Icon, Tag, NonIdealState } from '@blueprintjs/core';
 import moment from 'moment';
 
 import { DirDetails } from '../../types';
@@ -54,6 +54,15 @@ interface Props {
 }
 
 class DirDetailsView extends PureComponent<Props> {
+
+  renderNonIdeal = () => (
+    <NonIdealState
+      title="This folder is empty"
+      description="Create a new note please."
+      visual="folder-open"
+    />
+  )
+
   renderDetails = () => {
     const { dirDetails } = this.props;
     return dirDetails.map((child: DirDetails) => (
@@ -81,9 +90,10 @@ class DirDetailsView extends PureComponent<Props> {
   }
 
   render() {
+    const { dirDetails } = this.props;
     return (
       <Detail>
-        {this.renderDetails()}
+        {dirDetails.length === 0 ? this.renderNonIdeal() : this.renderDetails()}
       </Detail>
     );
   }
