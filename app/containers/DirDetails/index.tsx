@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import { Icon } from '@blueprintjs/core';
+import moment from 'moment';
 
 import { DirDetails } from '../../types';
 
@@ -30,6 +31,15 @@ const Titlt = styled.p`
     text-decoration: underline;
   }
 `;
+
+const About = styled.p`
+  font-size: 12px;
+  color: #A7B6C2;
+  & > span {
+    margin-right: 10px;
+  }
+`;
+
 interface Props {
   dirDetails: DirDetails[];
   [propsName: string]: any;
@@ -39,13 +49,19 @@ class DirDetailsView extends PureComponent<Props> {
   renderDetails = () => {
     const { dirDetails } = this.props;
     return dirDetails.map((child: DirDetails) => (
-      <Child>
+      <Child key={child.id}>
         <Titlt>
           {child.type === 'CATALOG'
             ? <Icon iconName="pt-icon-folder-close" />
             : <Icon iconName="pt-icon-document" />}
           {child.title}
         </Titlt>
+        <About>
+          <span>{child.type === 'CATALOG' ? '创建时间' : '最后修改时间'}</span>
+          <span>{child.type === 'CATALOG'
+            ? moment(child.createTime).format('ll')
+            : moment(child.lastUpdateTime).format('ll')}</span>
+        </About>
       </Child>
     ));
   }

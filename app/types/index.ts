@@ -5,6 +5,8 @@ export interface Directory {
   children: Directory[];
   belong?: string;
   type: string;
+  createTime: number;
+  lastUpdateTime?: number;
 }
 
 export interface Note {

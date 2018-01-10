@@ -10,9 +10,10 @@ async function initialDatabase() {
     id: MAIN_DIR_ID,
     title: '主目录',
     type: 'CATALOG',
+    createTime: new Date().getTime(),
     children: [
-      { id: generateUUID(), title: '子目录', type: 'CATALOG', children: [], belong: MAIN_DIR_ID },
-      { id: generateUUID(), title: '子目录2', type: 'CATALOG', children: [], belong: MAIN_DIR_ID }
+      { id: generateUUID(), title: '子目录', type: 'CATALOG', children: [], belong: MAIN_DIR_ID, createTime: new Date().getTime() },
+      { id: generateUUID(), title: '子目录2', type: 'CATALOG', children: [], belong: MAIN_DIR_ID, createTime: new Date().getTime() }
     ],
   });
   await createIndexDBObjectStore(INITIAL_NOTES_STORE_PARAMS);
@@ -22,8 +23,8 @@ async function initialDatabase() {
     title: '皮卡丘笔记本',
     type: 'NOTE',
     content: 'Hello World',
-    createTime: new Date().getTime() / 1000,
-    lastUpdateTime: new Date().getTime() / 1000,
+    createTime: new Date().getTime(),
+    lastUpdateTime: new Date().getTime(),
     tags: [],
     class: '默认',
   });
