@@ -2,10 +2,11 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Icon, Tag, NonIdealState } from '@blueprintjs/core';
+import { ContextMenu, Menu, MenuItem, Icon, Tag, NonIdealState } from '@blueprintjs/core';
 import moment from 'moment';
 
-import { DirDetails } from '../../types';
+import { setActiveItem } from '../../actions';
+import { DirDetails, ElectronAction } from '../../types';
 
 const Detail = styled.div`
   width: 325px;
@@ -28,14 +29,13 @@ const Child = styled.div`
 
 const Titlt = styled.div`
   display: flex;
-  &:hover {
-    text-decoration: underline;
-  }
+  height: 30px;
+  align-items: center;
 `;
 
 const AllTag = styled.p`
-  margin-left: 10px;
-  &>span {
+  margin: 0px 0px 0px 10px;
+  & > span {
     margin-right: 5px;
   }
 `;
@@ -50,10 +50,20 @@ const About = styled.p`
 
 interface Props {
   dirDetails: DirDetails[];
+  active: string;
+  onSetActiveItem: (id: string) => ElectronAction;
   [propsName: string]: any;
 }
 
-class DirDetailsView extends PureComponent<Props> {
+interface State {
+  isContextMenuOpen: boolean;
+}
+
+class DirDetailsView extends PureComponent<Props, State> {
+
+  state = {
+    isContextMenuOpen: false,
+  }
 
   renderNonIdeal = () => (
     <NonIdealState
@@ -63,10 +73,33 @@ class DirDetailsView extends PureComponent<Props> {
     />
   )
 
+  showContextMenu = (e: any) => {
+    e.preventDefault();
+    ContextMenu.show(
+      <Menu>
+        <MenuItem iconName="pt-icon-document" text="新建笔记" />
+        <MenuItem iconName="pt-icon-folder-close" text="新建文件夹" />
+      </Menu>,
+      { left: e.clientX, top: e.clientY },
+      () => this.setState({ isContextMenuOpen: false })
+    );
+    this.setState({ isContextMenuOpen: true });
+  };
+
+  handleChildClick = (id: string) => {
+    const { active, onSetActiveItem } = this.props;
+    if (active !== id) onSetActiveItem(id);
+  }
+
   renderDetails = () => {
-    const { dirDetails } = this.props;
+    const { dirDetails, active } = this.props;
     return dirDetails.map((child: DirDetails) => (
-      <Child key={child.id}>
+      <Child
+        key={child.id}
+        onContextMenu={this.showContextMenu}
+        onClick={() => this.handleChildClick(child.id)}
+        style={{ backgroundColor: active === child.id && 'rgba(191,204,214,.4)' }}
+      >
         <Titlt>
           {child.type === 'CATALOG'
             ? <Icon iconName="pt-icon-folder-close" />
@@ -101,9 +134,12 @@ class DirDetailsView extends PureComponent<Props> {
 
 const mapStateToProps = (state: any) => ({
   dirDetails: state.sidebar.dirDetails,
+  active: state.sidebar.active,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  onSetActiveItem: (id: string) => dispatch(setActiveItem(id)),
+});
 
 function mergePropss(stateProps: Object, dispatchProps: Object, ownProps: Object) {
   return Object.assign({}, ownProps, stateProps, dispatchProps);

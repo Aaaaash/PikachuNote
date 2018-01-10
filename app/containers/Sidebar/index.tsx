@@ -9,14 +9,14 @@ import {
 } from '../../actions';
 import { Container, Header, HeaderButton, Tree } from './styled';
 import { INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
-import { Directory } from '../../types';
+import { Directory, ElectronAction } from '../../types';
 
 interface Props {
   dir: Directory[];
   currentDir: string;
-  onFetchAllDir: (dbName: string, storeName: string) => {};
-  onFetchNotesByStoreID: (storeName: string) => {};
-  onSetCurrentDir: (id: string) => {};
+  onFetchAllDir: (dbName: string, storeName: string) => ElectronAction;
+  onFetchNotesByStoreID: (storeName: string) => ElectronAction;
+  onSetCurrentDir: (id: string) => ElectronAction;
   [propName: string]: any;
 }
 

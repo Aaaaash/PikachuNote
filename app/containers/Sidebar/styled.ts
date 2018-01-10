@@ -22,7 +22,6 @@ export const HeaderButton = styled.button`
 `;
 
 export const Tree = styled.div`
-  flex: 1;
   position: relative;
   padding-top: 10px;
 `;

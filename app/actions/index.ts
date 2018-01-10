@@ -4,6 +4,7 @@ import {
   FETCH_DIRECTORY_NOTES,
   FETCH_DIRECTORY_NOTES_COMPLETE,
   SET_CURRENT_DIRECTORY,
+  SET_ACTIVE_ITEM,
 } from '../constants';
 import { Directory, DirDetails } from '../types';
 
@@ -49,5 +50,12 @@ export function setCurrentDir(storeID: string) {
   return {
     type: SET_CURRENT_DIRECTORY,
     storeID,
+  };
+}
+
+export function setActiveItem(id: string) {
+  return {
+    type: SET_ACTIVE_ITEM,
+    id,
   };
 }

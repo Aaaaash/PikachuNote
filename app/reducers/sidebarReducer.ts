@@ -2,12 +2,14 @@ import {
   FETCH_ALL_DIRS_COMPLETE,
   FETCH_DIRECTORY_NOTES_COMPLETE,
   SET_CURRENT_DIRECTORY,
+  SET_ACTIVE_ITEM,
 } from '../constants';
 
 const initialState = {
   dir: [],
   dirDetails: [],
   currentDir: '',
+  active: '',
 };
 
 function reducer(state = initialState, action: any) {
@@ -15,10 +17,11 @@ function reducer(state = initialState, action: any) {
     case FETCH_ALL_DIRS_COMPLETE:
       return { ...state, dir: action.data };
     case FETCH_DIRECTORY_NOTES_COMPLETE:
-      console.log(action.data);
       return { ...state, dirDetails: action.data };
     case SET_CURRENT_DIRECTORY:
       return { ...state, currentDir: action.storeID };
+    case SET_ACTIVE_ITEM:
+      return { ...state, active: action.id };
     default:
       return state;
   }
