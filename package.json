@@ -169,6 +169,7 @@
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.0.0",
+    "react-quill": "^1.2.3",
     "react-redux": "^5.0.1",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

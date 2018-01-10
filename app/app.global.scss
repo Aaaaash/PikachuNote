@@ -1,5 +1,6 @@
 @import "~font-awesome/css/font-awesome.css";
 @import '~@blueprintjs/core/dist/blueprint.css';
+@import '~react-quill/dist/quill.snow.css';
 
 body {
   position: relative;
@@ -49,4 +50,13 @@ button, input {
 .pt-input {
   -webkit-app-region: no-drag;
   cursor: text !important;
+}
+
+.ql-container.ql-snow {
+  border: none;
+}
+
+.ql-toolbar.ql-snow {
+  border: none;
+  border-bottom: 1px solid rgba(167,182,194,0.3);
 }

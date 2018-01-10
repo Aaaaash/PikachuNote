@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Sidebar from '../Sidebar';
 import DirDetails from '../DirDetails';
+import Editor from '../Editor';
 
 const Container = styled.div`
   min-width: 128px;
@@ -12,15 +13,10 @@ const Container = styled.div`
   background-color: #f8f5f8;
 `;
 
-const Content = styled.div`
-  flex: 1;
-  background-color: #fff;
-`;
-
 export default () => (
   <Container>
     <Sidebar />
     <DirDetails />
-    <Content />
+    <Editor />
   </Container>
 );
