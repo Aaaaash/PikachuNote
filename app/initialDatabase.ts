@@ -20,12 +20,12 @@ async function initialDatabase() {
   await insertDataForSpecifiedStore(INDEXED_DATABASE_NAME, NOTES_STORE_NAME, {
     id: generateUUID(),
     belong: MAIN_DIR_ID,
-    title: '皮卡丘笔记本',
+    title: '默认笔记',
     type: 'NOTE',
     content: 'Hello World',
     createTime: new Date().getTime(),
     lastUpdateTime: new Date().getTime(),
-    tags: [],
+    tags: ['React', 'Electron'],
     class: '默认',
   });
   return true;

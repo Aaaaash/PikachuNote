@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { ContextMenu, Menu, MenuItem, Icon } from '@blueprintjs/core';
+import { ContextMenu, Menu, MenuItem, Icon, Intent } from '@blueprintjs/core';
 
 import StateFulIcon from '../StatefulIcon';
 import { Directory } from '../../types';
@@ -100,14 +100,26 @@ class TreeView extends PureComponent<Props, State> {
           onClick={() => this.handleDirClick(subdir.id)}
         >
           <StateFulIcon
-            enableElement={<Icon iconName="pt-icon-caret-down" />}
+            enableElement={<Icon
+              iconName="pt-icon-caret-down"
+              intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
+            />}
             enable={dirState[subdir.id]}
-            disableElement={<Icon iconName="pt-icon-caret-right" />}
+            disableElement={<Icon
+              iconName="pt-icon-caret-right"
+              intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
+            />}
           />
           <StateFulIcon
-            enableElement={<Icon iconName="pt-icon-folder-open" />}
+            enableElement={<Icon
+              iconName="pt-icon-folder-open"
+              intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
+            />}
             enable={dirState[subdir.id]}
-            disableElement={<Icon iconName="pt-icon-folder-close" />}
+            disableElement={<Icon
+              iconName="pt-icon-folder-close"
+              intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
+            />}
           />
           {subdir.title}
         </Dir>

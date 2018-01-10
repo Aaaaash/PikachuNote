@@ -7,6 +7,7 @@ export interface Directory {
   type: string;
   createTime: number;
   lastUpdateTime?: number;
+  tags?: Array<string>;
 }
 
 export interface Note {

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Icon, Intent } from '@blueprintjs/core';
+import { Icon, Tag } from '@blueprintjs/core';
 import moment from 'moment';
 
 import { DirDetails } from '../../types';
@@ -26,9 +26,17 @@ const Child = styled.div`
   }
 `;
 
-const Titlt = styled.p`
+const Titlt = styled.div`
+  display: flex;
   &:hover {
     text-decoration: underline;
+  }
+`;
+
+const AllTag = styled.p`
+  margin-left: 10px;
+  &>span {
+    margin-right: 5px;
   }
 `;
 
@@ -52,9 +60,15 @@ class DirDetailsView extends PureComponent<Props> {
       <Child key={child.id}>
         <Titlt>
           {child.type === 'CATALOG'
-            ? <Icon iconName="pt-icon-folder-close" intent={Intent.PRIMARY} />
-            : <Icon iconName="pt-icon-document" intent={Intent.PRIMARY} />}
+            ? <Icon iconName="pt-icon-folder-close" />
+            : <Icon iconName="pt-icon-document" />}
           {child.title}
+          <AllTag>
+            {child.tags
+              && child.tags.map((tag) => (
+                <Tag key={tag} className="pt-tag pt-minimal pt-round">{tag}</Tag>
+              ))}
+          </AllTag>
         </Titlt>
         <About>
           <span>{child.type === 'CATALOG' ? '创建时间' : '最后修改时间'}</span>

@@ -51,7 +51,6 @@ class Sidebar extends PureComponent<Props> {
     const { dir, onSetCurrentDir, currentDir } = this.props;
     return (
       <Container>
-        {this.renderHeader()}
         <Tree>
           <TreeView childs={dir} level={0} onSetCurrentDir={onSetCurrentDir} current={currentDir} />
         </Tree>
