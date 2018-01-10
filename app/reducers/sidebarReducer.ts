@@ -15,6 +15,7 @@ function reducer(state = initialState, action: any) {
     case FETCH_ALL_DIRS_COMPLETE:
       return { ...state, dir: action.data };
     case FETCH_DIRECTORY_NOTES_COMPLETE:
+      console.log(action.data);
       return { ...state, dirDetails: action.data };
     case SET_CURRENT_DIRECTORY:
       return { ...state, currentDir: action.id };

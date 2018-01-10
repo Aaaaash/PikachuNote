@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { Icon } from '@blueprintjs/core';
-import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
+import { ContextMenu, Menu, MenuItem, Icon } from '@blueprintjs/core';
 
 import StateFulIcon from '../StatefulIcon';
 import { Directory } from '../../types';
@@ -110,12 +109,12 @@ class TreeView extends PureComponent<Props, State> {
           {subdir.title}
         </Dir>
         {subdir.children.length > 0 && dirState[subdir.id] &&
-            <TreeView
-              childs={subdir.children}
-              level={level + 1}
-              onSetCurrentDir={onSetCurrentDir}
-              current={current}
-            />
+          <TreeView
+            childs={subdir.children}
+            level={level + 1}
+            onSetCurrentDir={onSetCurrentDir}
+            current={current}
+          />
         }
       </div>
     ));

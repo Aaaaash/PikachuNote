@@ -9,9 +9,10 @@ async function initialDatabase() {
   await insertDataForSpecifiedStore(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME, {
     id: MAIN_DIR_ID,
     title: '主目录',
+    type: 'CATALOG',
     children: [
-      { id: generateUUID(), title: '子目录', children: [], belong: MAIN_DIR_ID },
-      { id: generateUUID(), title: '子目录2', children: [], belong: MAIN_DIR_ID }
+      { id: generateUUID(), title: '子目录', type: 'CATALOG', children: [], belong: MAIN_DIR_ID },
+      { id: generateUUID(), title: '子目录2', type: 'CATALOG', children: [], belong: MAIN_DIR_ID }
     ],
   });
   await createIndexDBObjectStore(INITIAL_NOTES_STORE_PARAMS);
@@ -19,6 +20,7 @@ async function initialDatabase() {
     id: generateUUID(),
     belong: MAIN_DIR_ID,
     title: '皮卡丘笔记本',
+    type: 'NOTE',
     content: 'Hello World',
     createTime: new Date().getTime() / 1000,
     lastUpdateTime: new Date().getTime() / 1000,

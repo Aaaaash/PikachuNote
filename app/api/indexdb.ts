@@ -182,6 +182,7 @@ function getNotesByDirID(id: string): Promise<DirDetails[]> {
         });
 
         dirs_tx.addEventListener('complete', (event: any) => {
+          allData = allData.sort((a: DirDetails, b: DirDetails) => b.type.length - a.type.length);
           resolve(allData);
         });
       });

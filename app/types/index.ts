@@ -4,6 +4,7 @@ export interface Directory {
   title: string;
   children: Directory[];
   belong?: string;
+  type: string;
 }
 
 export interface Note {
@@ -13,8 +14,9 @@ export interface Note {
   content: string,
   createTime: number;
   lastUpdateTime: number;
-  tags: Array<string>,
-  class: string,
+  tags: Array<string>;
+  type: string;
+  class: string;
 }
 
 export type DirDetails = Note | Directory;
