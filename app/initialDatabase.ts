@@ -22,7 +22,7 @@ async function initialDatabase() {
     belong: MAIN_DIR_ID,
     title: '默认笔记',
     type: 'NOTE',
-    content: 'Hello World',
+    content: '<h1><strong>helloworld<span class="ql-cursor">﻿</span></strong></h1>',
     createTime: new Date().getTime(),
     lastUpdateTime: new Date().getTime(),
     tags: ['React', 'Electron'],

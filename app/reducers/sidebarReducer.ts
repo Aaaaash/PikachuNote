@@ -11,6 +11,7 @@ const initialState = {
   dirDetails: [],
   currentDir: '',
   active: '',
+  currentNote: {},
 };
 
 function reducer(state = initialState, action: ElectronAction) {
@@ -22,7 +23,8 @@ function reducer(state = initialState, action: ElectronAction) {
     case SET_CURRENT_DIRECTORY:
       return { ...state, currentDir: action.storeID };
     case SET_ACTIVE_ITEM:
-      return { ...state, active: action.id };
+      const currentNote = state.dirDetails.find((v: any) => v.id === action.id && v.type === 'NOTE');
+      return { ...state, active: action.id, currentNote: currentNote ? currentNote : {} };
     default:
       return state;
   }

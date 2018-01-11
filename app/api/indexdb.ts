@@ -150,6 +150,10 @@ function getDataById(dbName: string, storeName: string, id: string) {
   });
 }
 
+/**
+ * getNotesByDirID 获取指定id目录下的所有笔记
+ * @param id 目录id
+ */
 function getNotesByDirID(id: string): Promise<DirDetails[]> {
   return new Promise((resolve, reject) => {
     createDatabaseByName(INDEXED_DATABASE_NAME)
