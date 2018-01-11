@@ -123,7 +123,7 @@ function deleteDatabaseByName(name: string): Promise<boolean> {
  * @param storeName store名
  * @param id 唯一id
  */
-function getDataById(dbName: string, storeName: string, id: string) {
+function getDataById(dbName: string, storeName: string, id: string): Promise<any> {
   return new Promise((resolve, reject) => {
     createDatabaseByName(dbName)
       .then((db: IDBDatabase) => {
@@ -198,7 +198,7 @@ function getNotesByDirID(id: string): Promise<DirDetails[]> {
  * @param storeName store名
  * @param data 数据
  */
-function insertDataForSpecifiedStore(dbName: string, storeName: string, data: any) {
+function insertDataForSpecifiedStore(dbName: string, storeName: string, data: any): Promise<string> {
   return new Promise((resolve, reject) => {
     createDatabaseByName(dbName)
       .then((db: IDBDatabase) => {
@@ -224,7 +224,7 @@ function insertDataForSpecifiedStore(dbName: string, storeName: string, data: an
  * @param dbName 数据库名
  * @param storeName store名
  */
-function fetchAllDataByStoreName(dbName: string, storeName: string) {
+function fetchAllDataByStoreName(dbName: string, storeName: string): Promise<Directory[]> {
   return new Promise((resolve, reject) => {
     createDatabaseByName(dbName)
       .then((db: IDBDatabase) => {
