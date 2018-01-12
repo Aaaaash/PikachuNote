@@ -35,7 +35,7 @@ class Editor extends PureComponent<Props, State> {
     });
   }
 
-  render() {
+  render(): JSX.Element {
     const { currentNote } = this.props;
     return (
       <Container>
