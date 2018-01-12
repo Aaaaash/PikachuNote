@@ -1,29 +1,28 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { Providers } from 'ractor-react';
 
+import { FetchDirectory } from '../../message/FetchDirectory';
+import { SetCurrentDir } from '../../message/SetCurrentDir';
+import { SideBarStore } from '../../store/sidebar.store';
+import { system } from '../../system/appSystem';
 import TreeView from '../../components/TreeView';
-import {
-  fetchAllData,
-  setCurrentDir,
-} from '../../actions';
 import { Container, Header, HeaderButton, Tree } from './styled';
 import { INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
-import { Directory, ElectronAction } from '../../types';
 
 interface Props {
-  dir: Directory[];
-  currentDir: string;
-  onFetchAllDir: (dbName: string, storeName: string) => ElectronAction;
-  onFetchNotesByStoreID: (storeName: string) => ElectronAction;
-  onSetCurrentDir: (id: string) => ElectronAction;
   [propName: string]: any;
 }
 
+@Providers([
+	{ provide: SideBarStore }
+])
 class Sidebar extends PureComponent<Props> {
 
   componentWillMount() {
-    this.props.onFetchAllDir(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME);
+    system.dispatch(new FetchDirectory(
+      INDEXED_DATABASE_NAME,
+      TREE_DIRTORY_NAME,
+    ));
   }
 
   handleInsertNote = () => {
@@ -47,32 +46,24 @@ class Sidebar extends PureComponent<Props> {
     </Header>
   );
 
+  private setCurrentDir = (id: string) => {
+    system.dispatch(new SetCurrentDir(id));
+  }
   render() {
-    const { dir, onSetCurrentDir, currentDir } = this.props;
+    const { dir, currentDir } = this.props;
     return (
       <Container>
         <Tree>
-          <TreeView childs={dir} level={0} onSetCurrentDir={onSetCurrentDir} current={currentDir} />
+          <TreeView
+            childs={dir}
+            level={0}
+            onSetCurrentDir={this.setCurrentDir}
+            current={currentDir}
+          />
         </Tree>
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  dir: state.sidebar.dir,
-  currentDir: state.sidebar.currentDir,
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-  onFetchAllDir: (dbName: string, storeName: string) => dispatch(fetchAllData(dbName, storeName)),
-  onSetCurrentDir: (id: string) => dispatch(setCurrentDir(id)),
-});
-
-function mergePropss(stateProps: Object, dispatchProps: Object, ownProps: Object) {
-  return Object.assign({}, ownProps, stateProps, dispatchProps);
-}
-
-const withConnect = connect(mapStateToProps, mapDispatchToProps, mergePropss);
-
-export default compose(withConnect)(Sidebar);
+export default Sidebar;

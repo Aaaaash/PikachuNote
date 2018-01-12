@@ -23,7 +23,7 @@ interface Props {
   childs: Directory[];
   level: number;
   current: string;
-  onSetCurrentDir: (id: string) => {};
+  onSetCurrentDir: (id: string) => void;
   [propName: string]: any;
 }
 
