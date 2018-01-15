@@ -21,12 +21,12 @@ export class SideBarStore extends Store<{}> {
         this.setState({ dir });
         this.context.system.dispatch(new SetCurrentDir(dir[0]['id']));
       })
-      .match(SetCurrentDir, async (setCurrentDir) => {
+      .match(SetCurrentDir, async (setCurrentDir: SetCurrentDir) => {
         this.setState({ currentDir: setCurrentDir.id });
         const notes = await getNotesByDirID(setCurrentDir.id);
         this.setState({ dirDetails: notes });
       })
-      .match(SetActiveItem, (setActiveItem) => {
+      .match(SetActiveItem, (setActiveItem: SetActiveItem) => {
         const currentNote = this.state.dirDetails.find((v: any) => v.id === setActiveItem.id && v.type === 'NOTE');
         this.setState({
           active: setActiveItem.id,
