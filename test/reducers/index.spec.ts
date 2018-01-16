@@ -23,6 +23,8 @@ const MOCK_DIRECTORY_LIST: Array<Directory> = [
   }
 ];
 
+const MOCK_CURRENT_DIR_ID = 'testid';
+
 describe('reducers', () => {
   describe('initial State', () => {
     it('should handle initial state', () => {
@@ -33,6 +35,12 @@ describe('reducers', () => {
         ...MOCK_INITIAL_STATE,
         dir: MOCK_DIRECTORY_LIST,
       });
-    })
+    });
+    it('should handle SET_CURRENT_DIRECTORY action', () => {
+      expect(reducer(MOCK_INITIAL_STATE, actions.setCurrentDir(MOCK_CURRENT_DIR_ID))).toEqual({
+        ...MOCK_INITIAL_STATE,
+        currentDir: MOCK_CURRENT_DIR_ID,
+      });
+    });
   });
 });
