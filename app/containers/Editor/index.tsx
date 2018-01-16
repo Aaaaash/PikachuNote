@@ -37,6 +37,18 @@ class Editor extends PureComponent<Props, State> {
     });
   }
 
+  renderNoteDetails = (): JSX.Element => {
+    const { currentNote } = this.props;
+    return (<div>
+      <p>{currentNote.title}</p>
+      <p>{(currentNote as Note).lastUpdateTime}</p>
+      <ReactQuill
+      value={(currentNote as Note).content}
+      onChange={this.handleChange}
+    />
+    </div>);
+  }
+
   render(): JSX.Element {
     const { currentNote } = this.props;
     return (
@@ -45,10 +57,7 @@ class Editor extends PureComponent<Props, State> {
         ? <NonIdealState
           visual="folder-close"
         />
-        : <ReactQuill
-            value={(currentNote as Note).content}
-            onChange={this.handleChange}
-          />}
+        : this.renderNoteDetails()}
       </Container>
     );
   }

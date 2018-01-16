@@ -4,9 +4,10 @@ import { FetchDirectory } from '../message/FetchDirectory';
 import { SetCurrentDir } from '../message/SetCurrentDir';
 import { SetActiveItem } from '../message/SetActiveItem';
 import { fetchAllDataByStoreName, getNotesByDirID } from '../api/indexdb';
+import { StoreState } from '../types';
 
 export class SideBarStore extends Store<{}> {
-  public state = {
+  public state: StoreState = {
     dir: [],
     currentDir: '',
     dirDetails: [],
