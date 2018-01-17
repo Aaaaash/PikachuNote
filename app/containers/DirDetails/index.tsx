@@ -5,9 +5,12 @@ import { ContextMenu, Menu, MenuItem, Icon, Tag, NonIdealState, EditableText } f
 import moment from 'moment';
 
 import { SetActiveItem } from '../../message/SetActiveItem';
+import InsertNewNot from '../../message/InsertNewNote';
 import { system } from '../../system/appSystem';
 import { DirDetails } from '../../types';
 import { SideBarStore } from '../../store/sidebar.store';
+import generateUUID from '../../utils/guid';
+import { INDEXED_DATABASE_NAME, NOTES_STORE_NAME } from '../../common/constants';
 
 const Detail = styled.div`
   width: 325px;
@@ -77,16 +80,30 @@ class DirDetailsView extends PureComponent<Props, State> {
     />
   )
 
-  insertNewNote = (id: string) => {
-    console.log(id);
-    // TODO
+  insertNewNote = () => {
+    const { currentDir } = this.props;
+    system.dispatch(new InsertNewNot(
+      INDEXED_DATABASE_NAME,
+      NOTES_STORE_NAME,
+      {
+        id: generateUUID(),
+        belong: currentDir,
+        title: '默认笔记',
+        type: 'NOTE',
+        content: '<h1><strong>helloworld<span class="ql-cursor">﻿</span></strong></h1>',
+        createTime: new Date().getTime(),
+        lastUpdateTime: new Date().getTime(),
+        tags: ['React', 'Electron'],
+        class: '默认',
+      }
+    ));
   }
 
-  showContextMenu = (e: MouseEvent<any>, id: string) => {
+  showContextMenu = (e: MouseEvent<any>) => {
     e.preventDefault();
     ContextMenu.show(
       <Menu>
-        <MenuItem iconName="pt-icon-document" text="新建笔记" onClick={() => this.insertNewNote(id)} />
+        <MenuItem iconName="pt-icon-document" text="新建笔记" onClick={this.insertNewNote} />
         <MenuItem iconName="pt-icon-folder-close" text="新建文件夹" />
       </Menu>,
       { left: e.clientX, top: e.clientY },
@@ -104,8 +121,8 @@ class DirDetailsView extends PureComponent<Props, State> {
     return dirDetails.map((child: DirDetails) => (
       <Child
         key={child.id}
-        onContextMenu={(e: MouseEvent<any>) => this.showContextMenu(e, child.id)}
         onClick={() => this.handleChildClick(child.id)}
+        onContextMenu={(e: MouseEvent<any>) => e.stopPropagation()}
         style={{ backgroundColor: active === child.id && 'rgba(191,204,214,.4)' }}
       >
         <Titlt>
@@ -133,7 +150,7 @@ class DirDetailsView extends PureComponent<Props, State> {
   render() {
     const { dirDetails } = this.props;
     return (
-      <Detail>
+      <Detail onContextMenu={this.showContextMenu}>
         {dirDetails.length === 0 ? this.renderNonIdeal() : this.renderDetails()}
       </Detail>
     );
