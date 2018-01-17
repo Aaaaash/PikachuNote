@@ -68,7 +68,6 @@ class TreeView extends PureComponent<Props, State> {
   handleCaretClick = (e: Event, id: string): void => {
     e.stopPropagation();
     const { dirState } = this.state;
-    console.log(dirState[id]);
     this.setState({
       dirState: { ...dirState, [id]: !dirState[id] },
     });

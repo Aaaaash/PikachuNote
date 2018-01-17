@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { ContextMenu, Menu, MenuItem, Icon, Tag, NonIdealState, EditableText } from '@blueprintjs/core';
 import moment from 'moment';
 
-import { setActiveItem } from '../../actions';
+import { setActiveItem, setCurrentDir } from '../../actions';
 import { DirDetails, ElectronAction } from '../../types';
 
 const Detail = styled.div`
@@ -55,6 +55,7 @@ interface Props {
   dirDetails: DirDetails[];
   active: string;
   onSetActiveItem: (id: string) => ElectronAction;
+  onSetCurrentDir: (id: string) => ElectronAction;
   [propsName: string]: any;
 }
 
@@ -94,9 +95,12 @@ class DirDetailsView extends PureComponent<Props, State> {
     this.setState({ isContextMenuOpen: true });
   };
 
-  handleChildClick = (id: string) => {
-    const { active, onSetActiveItem } = this.props;
+  handleChildClick = (id: string, type: string) => {
+    const { active, onSetActiveItem, onSetCurrentDir } = this.props;
     if (active !== id) onSetActiveItem(id);
+    if (type === 'CATALOG') {
+      onSetCurrentDir(id);
+    }
   }
 
   renderDetails = () => {
@@ -105,7 +109,7 @@ class DirDetailsView extends PureComponent<Props, State> {
       <Child
         key={child.id}
         onContextMenu={(e: MouseEvent<any>) => this.showContextMenu(e, child.id)}
-        onClick={() => this.handleChildClick(child.id)}
+        onClick={() => this.handleChildClick(child.id, child.type)}
         style={{ backgroundColor: active === child.id && 'rgba(191,204,214,.4)' }}
       >
         <Titlt>
@@ -147,6 +151,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   onSetActiveItem: (id: string) => dispatch(setActiveItem(id)),
+  onSetCurrentDir: (id: string) => dispatch(setCurrentDir(id)),
 });
 
 function mergePropss(stateProps: Object, dispatchProps: Object, ownProps: Object) {
