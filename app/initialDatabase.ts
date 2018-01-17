@@ -28,6 +28,17 @@ async function initialDatabase() {
     tags: ['React', 'Electron'],
     class: '默认',
   });
+  await insertDataForSpecifiedStore(INDEXED_DATABASE_NAME, NOTES_STORE_NAME, {
+    id: generateUUID(),
+    belong: MAIN_DIR_ID,
+    title: '测试记',
+    type: 'NOTE',
+    content: 'keke',
+    createTime: new Date().getTime(),
+    lastUpdateTime: new Date().getTime(),
+    tags: [],
+    class: '默认',
+  });
   return true;
 }
 

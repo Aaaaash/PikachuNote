@@ -167,9 +167,9 @@ function getNotesByDirID(id: string): Promise<DirDetails[]> {
           if (cursor) {
             const note: DirDetails = cursor.value;
             if (note.belong === id) {
-              allData.push(cursor.value);
-              cursor.continue();
+              allData.push(note);
             }
+            cursor.continue();
           }
         });
 
@@ -181,11 +181,13 @@ function getNotesByDirID(id: string): Promise<DirDetails[]> {
           if (cursor) {
             const dir: DirDetails = cursor.value;
             const result = findSubDirById(dir, id);
-            allData = allData.concat(result);
+            if (result.length > 0) {
+              allData = allData.concat(result);
+            }
           }
         });
 
-        dirs_tx.addEventListener('complete', (event: any) => {
+        notes_tx.addEventListener('complete', (event: any) => {
           allData = allData.sort((a: DirDetails, b: DirDetails) => b.type.length - a.type.length);
           resolve(allData);
         });
