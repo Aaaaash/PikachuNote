@@ -4,6 +4,7 @@ interface StateFulIconProps {
   enable: boolean;
   enableElement: any;
   disableElement: any;
+  onClick?: () => any;
 }
 
 class StateFulIcon extends PureComponent<StateFulIconProps> {

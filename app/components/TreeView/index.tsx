@@ -59,14 +59,19 @@ class TreeView extends PureComponent<Props, State> {
   }
 
   handleDirClick = (id: string): void => {
-    const { dirState } = this.state;
     const { current } = this.props;
     if (current !== id) {
       this.props.onSetCurrentDir(id);
     }
+  }
+
+  handleCaretClick = (e: Event, id: string): void => {
+    e.stopPropagation();
+    const { dirState } = this.state;
+    console.log(dirState[id]);
     this.setState({
       dirState: { ...dirState, [id]: !dirState[id] },
-    })
+    });
   }
 
   renderTreeView = (): any => {
@@ -84,11 +89,13 @@ class TreeView extends PureComponent<Props, State> {
           <StateFulIcon
             enableElement={<Icon
               iconName="pt-icon-caret-down"
+              onClick={(e: any) => this.handleCaretClick(e, subdir.id)}
               intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
             />}
             enable={dirState[subdir.id]}
             disableElement={<Icon
               iconName="pt-icon-caret-right"
+              onClick={(e: any) => this.handleCaretClick(e, subdir.id)}
               intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
             />}
           />
