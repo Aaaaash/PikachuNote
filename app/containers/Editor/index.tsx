@@ -64,4 +64,3 @@ class Editor extends PureComponent<Props, State> {
 }
 
 export default Editor;
-
