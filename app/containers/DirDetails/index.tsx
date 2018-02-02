@@ -88,7 +88,7 @@ class DirDetailsView extends PureComponent<Props, State> {
       {
         id: generateUUID(),
         belong: currentDir,
-        title: '默认笔记',
+        title: `默认笔记${Number(Math.random() * 1000)}`,
         type: 'NOTE',
         content: '<h1><strong>helloworld<span class="ql-cursor">﻿</span></strong></h1>',
         createTime: new Date().getTime(),
