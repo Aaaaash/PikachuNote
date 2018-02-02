@@ -28,3 +28,11 @@ export interface ElectronAction {
   type: string;
   [propName: string]: any;
 };
+
+export interface StoreState {
+  dir: Directory[] | any,
+  currentDir: string,
+  dirDetails: DirDetails[] | any,
+  active: string,
+  currentNote: Note | {},
+}

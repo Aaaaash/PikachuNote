@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import Sidebar from '../Sidebar';
 import DirDetails from '../DirDetails';
 import Editor from '../Editor';

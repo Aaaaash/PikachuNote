@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
+import { Providers } from 'ractor-react';
 import { isEmpty } from 'lodash';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import { NonIdealState } from '@blueprintjs/core';
 
+import { SideBarStore } from '../../store/sidebar.store';
 import { Note } from '../../types';
 
 const Container = styled.div`
@@ -14,7 +14,6 @@ const Container = styled.div`
 `;
 
 interface Props {
-  currentNote: Note | {};
   [propName: string]: any;
 }
 
@@ -22,6 +21,9 @@ interface State {
   text: string;
 }
 
+@Providers([
+	{ provide: SideBarStore }
+])
 class Editor extends PureComponent<Props, State> {
 
   state = {
@@ -35,6 +37,18 @@ class Editor extends PureComponent<Props, State> {
     });
   }
 
+  renderNoteDetails = (): JSX.Element => {
+    const { currentNote } = this.props;
+    return (<div>
+      <p>{currentNote.title}</p>
+      <p>{(currentNote as Note).lastUpdateTime}</p>
+      <ReactQuill
+      value={(currentNote as Note).content}
+      onChange={this.handleChange}
+    />
+    </div>);
+  }
+
   render(): JSX.Element {
     const { currentNote } = this.props;
     return (
@@ -43,26 +57,10 @@ class Editor extends PureComponent<Props, State> {
         ? <NonIdealState
           visual="folder-close"
         />
-        : <ReactQuill
-            value={(currentNote as Note).content}
-            onChange={this.handleChange}
-          />}
+        : this.renderNoteDetails()}
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  currentNote: state.sidebar.currentNote,
-});
-
-const mapDispatchToProps = (dispatch: any) => ({});
-
-function mergePropss(stateProps: Object, dispatchProps: Object, ownProps: Object) {
-  return Object.assign({}, ownProps, stateProps, dispatchProps);
-}
-
-const withConnect = connect(mapStateToProps, mapDispatchToProps, mergePropss);
-
-export default compose(withConnect)(Editor);
-
+export default Editor;
