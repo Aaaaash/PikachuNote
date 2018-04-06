@@ -44,8 +44,8 @@ export const About = styled.div`
   & > p {
     padding: 0px;
     margin: 0px;
-  }
-  & > span {
-    margin-right: 10px;
+    & > span {
+      margin-right: 10px;
+    }
   }
 `;
