@@ -35,9 +35,16 @@ export const AllTag = styled.p`
   }
 `;
 
-export const About = styled.p`
+export const About = styled.div`
   font-size: 12px;
   color: #a7b6c2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & > p {
+    padding: 0px;
+    margin: 0px;
+  }
   & > span {
     margin-right: 10px;
   }

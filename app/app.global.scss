@@ -1,5 +1,6 @@
 @import "~font-awesome/css/font-awesome.css";
 @import '~@blueprintjs/core/lib/css/blueprint.css';
+@import '~@blueprintjs/icons/lib/css/blueprint-icons.css';
 @import '~react-quill/dist/quill.snow.css';
 
 body {
@@ -59,4 +60,10 @@ button, input {
 .ql-toolbar.ql-snow {
   border: none;
   border-bottom: 1px solid rgba(167,182,194,0.3);
+}
+
+.editable-text-custom-style {
+  flex: 1;
+  max-width: 200px !important;
+  margin: 0px 10px !important;
 }

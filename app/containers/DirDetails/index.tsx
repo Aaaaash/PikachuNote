@@ -95,6 +95,7 @@ class DirDetailsView extends PureComponent<Props, State> {
         style={{
           backgroundColor: active === child.id ? "rgba(191,204,214,.4)" : undefined
         }}
+        // onContextMenu={this.showContextMenu}
       >
         <Titlt>
           {child.type === "CATALOG" ? (
@@ -102,23 +103,25 @@ class DirDetailsView extends PureComponent<Props, State> {
           ) : (
             <Icon icon="document" />
           )}
-          <EditableText value={child.title} />
+          <EditableText value={child.title} className="editable-text-custom-style" />
+        </Titlt>
+        <About>
+          <p>
+            <span>{child.type === "CATALOG" ? "创建时间" : "最后修改时间"}</span>
+            <span>
+              {child.type === "CATALOG"
+                ? moment(child.createTime).fromNow()
+                : moment(child.lastUpdateTime).fromNow()}
+            </span>
+          </p>
           <AllTag>
             {child.tags &&
               child.tags.map(tag => (
-                <Tag key={tag} className="tag minimal round">
+                <Tag key={tag} className="pt-tag pt-minimal pt-round">
                   {tag}
                 </Tag>
               ))}
           </AllTag>
-        </Titlt>
-        <About>
-          <span>{child.type === "CATALOG" ? "创建时间" : "最后修改时间"}</span>
-          <span>
-            {child.type === "CATALOG"
-              ? moment(child.createTime).fromNow()
-              : moment(child.lastUpdateTime).fromNow()}
-          </span>
         </About>
       </Child>
     ));
@@ -127,7 +130,7 @@ class DirDetailsView extends PureComponent<Props, State> {
   render() {
     const { dirDetails } = this.props;
     return (
-      <Detail onContextMenu={this.showContextMenu}>
+      <Detail>
         {dirDetails.length === 0 ? this.renderNonIdeal() : this.renderDetails()}
       </Detail>
     );

@@ -13,7 +13,7 @@ import { INDEXED_DATABASE_NAME } from "./common/constants";
 import PikachuStore from "./store/sidebar.store";
 import initialDatabase from "./initialDatabase";
 
-moment.lang('zh-cn');
+moment.locale('zh-cn');
 
 isDataBasebeCreated(INDEXED_DATABASE_NAME)
   .then((haveDb): any => {

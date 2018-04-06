@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import styled from "styled-components";
 import ReactQuill from "react-quill";
 import { Providers } from "ractor-react";
 import { isEmpty } from "lodash";
@@ -9,10 +8,12 @@ import moment from "moment";
 import PikachuStore from "../../store/sidebar.store";
 import { Note } from "../../types";
 
-const Container = styled.div`
-  flex: 1;
-  background-color: #fff;
-`;
+import {
+  Container,
+  ArchiveModel,
+  Titlt,
+  Time,
+} from './styled';
 
 interface Props {
   [propName: string]: any;
@@ -38,14 +39,14 @@ class Editor extends PureComponent<Props, State> {
   renderNoteDetails = (): JSX.Element => {
     const { currentNote } = this.props;
     return (
-      <div>
-        <p>{currentNote.title}</p>
-        <p>{moment((currentNote as Note).lastUpdateTime).format('LLL')}</p>
+      <ArchiveModel>
+        <Titlt>{currentNote.title}</Titlt>
+        <Time>{moment((currentNote as Note).lastUpdateTime).format('LLL')}</Time>
         <ReactQuill
           value={(currentNote as Note).content}
           onChange={this.handleChange}
         />
-      </div>
+      </ArchiveModel>
     );
   };
 
