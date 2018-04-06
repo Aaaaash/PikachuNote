@@ -1,23 +1,15 @@
-import * as React from 'react';
-import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import { Provider } from 'ractor-react'
-import { system } from './system/appSystem';
-// import { Provider } from 'react-redux';
-// import { ConnectedRouter } from 'react-router-redux';
-// import { createBrowserHistory } from 'history';
-import Route from './routes';
-import './app.global.scss';
+import * as React from "react";
+import { render } from "react-dom";
+import { AppContainer } from "react-hot-loader";
+import { Provider } from "ractor-react";
+import { system } from "./system/appSystem";
+import Route from "./routes";
+import "./app.global.scss";
 
-import { isDataBasebeCreated } from './api/indexdb';
-import { INDEXED_DATABASE_NAME } from './common/constants';
-import { SideBarStore } from './store/sidebar.store';
-import initialDatabase from './initialDatabase';
-// import configureStore from './configureStore';
-
-// const initialState = {};
-
-// const store = configureStore(initialState, history);
+import { isDataBasebeCreated } from "./api/indexdb";
+import { INDEXED_DATABASE_NAME } from "./common/constants";
+import PikachuStore from "./store/sidebar.store";
+import initialDatabase from "./initialDatabase";
 
 isDataBasebeCreated(INDEXED_DATABASE_NAME)
   .then((haveDb): any => {
@@ -29,10 +21,10 @@ isDataBasebeCreated(INDEXED_DATABASE_NAME)
   .then(() => {
     render(
       <AppContainer>
-        <Provider system={system} stores={[SideBarStore]}>
+        <Provider system={system} stores={[PikachuStore]}>
           <Route />
         </Provider>
       </AppContainer>,
-      document.getElementById('root')
+      document.getElementById("root")
     );
   });

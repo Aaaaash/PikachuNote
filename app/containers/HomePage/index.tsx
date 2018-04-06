@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import Sidebar from '../Sidebar';
-import DirDetails from '../DirDetails';
-import Editor from '../Editor';
+import React from "react";
+import styled from "styled-components";
+import Sidebar from "../Sidebar";
+import DirDetails from "../DirDetails";
+import Editor from "../Editor";
 
 const Container = styled.div`
   min-width: 128px;

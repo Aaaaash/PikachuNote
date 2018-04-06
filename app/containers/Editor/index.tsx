@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react';
-import styled from 'styled-components';
-import ReactQuill from 'react-quill';
-import { Providers } from 'ractor-react';
-import { isEmpty } from 'lodash';
-import { NonIdealState } from '@blueprintjs/core';
+import React, { PureComponent } from "react";
+import styled from "styled-components";
+import ReactQuill from "react-quill";
+import { Providers } from "ractor-react";
+import { isEmpty } from "lodash";
+import { NonIdealState } from "@blueprintjs/core";
 
-import { SideBarStore } from '../../store/sidebar.store';
-import { Note } from '../../types';
+import PikachuStore from "../../store/sidebar.store";
+import { Note } from "../../types";
 
 const Container = styled.div`
   flex: 1;
@@ -21,43 +21,42 @@ interface State {
   text: string;
 }
 
-@Providers([
-	{ provide: SideBarStore }
-])
+@Providers([{ provide: PikachuStore }])
 class Editor extends PureComponent<Props, State> {
-
   state = {
-    text: '',
-  }
+    text: ""
+  };
 
   handleChange = (value: string) => {
     console.log(value);
     this.setState({
-      text: value,
+      text: value
     });
-  }
+  };
 
   renderNoteDetails = (): JSX.Element => {
     const { currentNote } = this.props;
-    return (<div>
-      <p>{currentNote.title}</p>
-      <p>{(currentNote as Note).lastUpdateTime}</p>
-      <ReactQuill
-      value={(currentNote as Note).content}
-      onChange={this.handleChange}
-    />
-    </div>);
-  }
+    return (
+      <div>
+        <p>{currentNote.title}</p>
+        <p>{(currentNote as Note).lastUpdateTime}</p>
+        <ReactQuill
+          value={(currentNote as Note).content}
+          onChange={this.handleChange}
+        />
+      </div>
+    );
+  };
 
   render(): JSX.Element {
     const { currentNote } = this.props;
     return (
       <Container>
-        {isEmpty(currentNote)
-        ? <NonIdealState
-          visual="folder-close"
-        />
-        : this.renderNoteDetails()}
+        {isEmpty(currentNote) ? (
+          <NonIdealState visual="folder-close" />
+        ) : (
+          this.renderNoteDetails()
+        )}
       </Container>
     );
   }

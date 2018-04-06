@@ -1,3 +1,3 @@
-export class FetchDirectory {
+export default class FetchDirectory {
   constructor(public dbName: string, public storeName: string) {}
 };

@@ -1,13 +1,13 @@
 import { Store } from 'ractor';
 
-import { FetchDirectory } from '../message/FetchDirectory';
-import { SetCurrentDir } from '../message/SetCurrentDir';
-import { SetActiveItem } from '../message/SetActiveItem';
+import FetchDirectory from '../message/FetchDirectory';
+import SetCurrentDir from '../message/SetCurrentDir';
+import SetActiveItem from '../message/SetActiveItem';
 import InsertNewNote from '../message/InsertNewNote';
 import { fetchAllDataByStoreName, getNotesByDirID, insertDataForSpecifiedStore } from '../api/indexdb';
 import { StoreState } from '../types';
 
-export class SideBarStore extends Store<{}> {
+export default class SideBarStore extends Store<{}> {
   public state: StoreState = {
     dir: [],
     currentDir: '',

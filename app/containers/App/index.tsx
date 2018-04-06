@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import { Position, Toaster, Intent } from '@blueprintjs/core';
-import styled from 'styled-components';
+import React, { PureComponent } from "react";
+import { Position, Toaster, Intent } from "@blueprintjs/core";
+import styled from "styled-components";
 
 const DragHeader = styled.header`
   -webkit-app-region: drag;
@@ -14,14 +14,16 @@ const DragHeader = styled.header`
   background-color: #434a54;
 `;
 
-interface Props {
-
-}
+interface Props {}
 
 export default class App extends PureComponent<Props> {
   toaster: any;
 
-  handleShowToaster = (message: string, intent: Intent, timeout: number = 1000) => {
+  handleShowToaster = (
+    message: string,
+    intent: Intent,
+    timeout: number = 1000
+  ) => {
     this.toaster.show({
       message,
       timeout,

@@ -1,34 +1,33 @@
-import React, { PureComponent } from 'react';
-import { Providers } from 'ractor-react';
+import React, { PureComponent } from "react";
+import { Providers } from "ractor-react";
 
-import { FetchDirectory } from '../../message/FetchDirectory';
-import { SetCurrentDir } from '../../message/SetCurrentDir';
-import { SideBarStore } from '../../store/sidebar.store';
-import { system } from '../../system/appSystem';
-import TreeView from '../../components/TreeView';
-import { Container, Header, HeaderButton, Tree } from './styled';
-import { INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME } from '../../common/constants';
+import FetchDirectory from "../../message/FetchDirectory";
+import SetCurrentDir from "../../message/SetCurrentDir";
+import PikachuStore from "../../store/sidebar.store";
+import { system } from "../../system/appSystem";
+import TreeView from "../../components/TreeView";
+import { Container, Header, HeaderButton, Tree } from "./styled";
+import {
+  INDEXED_DATABASE_NAME,
+  TREE_DIRTORY_NAME
+} from "../../common/constants";
 
 interface Props {
   [propName: string]: any;
 }
 
-@Providers([
-	{ provide: SideBarStore }
-])
+@Providers([{ provide: PikachuStore }])
 class Sidebar extends PureComponent<Props> {
-
   componentWillMount() {
-    system.dispatch(new FetchDirectory(
-      INDEXED_DATABASE_NAME,
-      TREE_DIRTORY_NAME,
-    ));
+    system.dispatch(
+      new FetchDirectory(INDEXED_DATABASE_NAME, TREE_DIRTORY_NAME)
+    );
   }
 
   handleInsertNote = () => {
     const { onInsertNewNote } = this.props;
     onInsertNewNote();
-  }
+  };
 
   renderHeader = () => (
     <Header>
@@ -48,7 +47,7 @@ class Sidebar extends PureComponent<Props> {
 
   private setCurrentDir = (id: string) => {
     system.dispatch(new SetCurrentDir(id));
-  }
+  };
   render() {
     const { dir, currentDir } = this.props;
     return (
