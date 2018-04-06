@@ -4,6 +4,7 @@ import ReactQuill from "react-quill";
 import { Providers } from "ractor-react";
 import { isEmpty } from "lodash";
 import { NonIdealState } from "@blueprintjs/core";
+import moment from "moment";
 
 import PikachuStore from "../../store/sidebar.store";
 import { Note } from "../../types";
@@ -39,7 +40,7 @@ class Editor extends PureComponent<Props, State> {
     return (
       <div>
         <p>{currentNote.title}</p>
-        <p>{(currentNote as Note).lastUpdateTime}</p>
+        <p>{moment((currentNote as Note).lastUpdateTime).format('LLL')}</p>
         <ReactQuill
           value={(currentNote as Note).content}
           onChange={this.handleChange}

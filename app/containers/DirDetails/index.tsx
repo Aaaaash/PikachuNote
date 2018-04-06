@@ -69,11 +69,11 @@ class DirDetailsView extends PureComponent<Props, State> {
     ContextMenu.show(
       <Menu>
         <MenuItem
-          iconName="pt-icon-document"
+          icon="document"
           text="新建笔记"
           onClick={this.insertNewNote}
         />
-        <MenuItem iconName="pt-icon-folder-close" text="新建文件夹" />
+        <MenuItem icon="folder-close" text="新建文件夹" />
       </Menu>,
       { left: e.clientX, top: e.clientY },
       () => this.setState({ isContextMenuOpen: false })
@@ -93,20 +93,20 @@ class DirDetailsView extends PureComponent<Props, State> {
         onClick={() => this.handleChildClick(child.id)}
         onContextMenu={(e: MouseEvent<any>) => e.stopPropagation()}
         style={{
-          backgroundColor: active === child.id && "rgba(191,204,214,.4)"
+          backgroundColor: active === child.id ? "rgba(191,204,214,.4)" : undefined
         }}
       >
         <Titlt>
           {child.type === "CATALOG" ? (
-            <Icon iconName="pt-icon-folder-close" />
+            <Icon icon="folder-close" />
           ) : (
-            <Icon iconName="pt-icon-document" />
+            <Icon icon="document" />
           )}
           <EditableText value={child.title} />
           <AllTag>
             {child.tags &&
               child.tags.map(tag => (
-                <Tag key={tag} className="pt-tag pt-minimal pt-round">
+                <Tag key={tag} className="tag minimal round">
                   {tag}
                 </Tag>
               ))}
@@ -116,8 +116,8 @@ class DirDetailsView extends PureComponent<Props, State> {
           <span>{child.type === "CATALOG" ? "创建时间" : "最后修改时间"}</span>
           <span>
             {child.type === "CATALOG"
-              ? moment(child.createTime).format("ll")
-              : moment(child.lastUpdateTime).format("ll")}
+              ? moment(child.createTime).fromNow()
+              : moment(child.lastUpdateTime).fromNow()}
           </span>
         </About>
       </Child>

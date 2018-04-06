@@ -81,31 +81,31 @@ class TreeView extends PureComponent<Props, State> {
         <Dir
           style={{
             paddingLeft: `calc(${level} * 10px)`,
-            backgroundColor: current === subdir.id && 'rgba(167, 182, 194, 0.3)',
+            backgroundColor: current === subdir.id ? 'rgba(167, 182, 194, 0.3)' : undefined,
           }}
           onClick={() => this.handleDirClick(subdir.id)}
         >
           <StateFulIcon
             enableElement={<Icon
-              iconName="pt-icon-caret-down"
+              icon="caret-down"
               onClick={(e: any) => this.handleCaretClick(e, subdir.id)}
               intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
             />}
             enable={dirState[subdir.id]}
             disableElement={<Icon
-              iconName="pt-icon-caret-right"
+              icon="caret-right"
               onClick={(e: any) => this.handleCaretClick(e, subdir.id)}
               intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
             />}
           />
           <StateFulIcon
             enableElement={<Icon
-              iconName="pt-icon-folder-open"
+              icon="folder-open"
               intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
             />}
             enable={dirState[subdir.id]}
             disableElement={<Icon
-              iconName="pt-icon-folder-close"
+              icon="folder-close"
               intent={current === subdir.id ? Intent.PRIMARY : Intent.NONE}
             />}
           />
