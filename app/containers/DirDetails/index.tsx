@@ -7,6 +7,8 @@ import InsertNewNot from "../../message/InsertNewNote";
 import { system } from "../../system/appSystem";
 import { DirDetails } from "../../types";
 import PikachuStore from "../../store/sidebar.store";
+import SideStore from '../../store/side.store';
+
 import generateUUID from "../../utils/guid";
 import {
   INDEXED_DATABASE_NAME,
@@ -24,7 +26,10 @@ interface Props {
 interface State {
 }
 
-@Providers([{ provide: PikachuStore }])
+@Providers([
+  { provide: PikachuStore },
+  { provide: SideStore },
+])
 class DirDetailsView extends PureComponent<Props, State> {
 
   renderNonIdeal = () => (

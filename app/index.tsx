@@ -11,6 +11,7 @@ import "./app.global.scss";
 import { isDataBasebeCreated } from "./api/indexdb";
 import { INDEXED_DATABASE_NAME } from "./common/constants";
 import PikachuStore from "./store/sidebar.store";
+import RepeatStore from "./store/repeat.store";
 import initialDatabase from "./initialDatabase";
 
 moment.locale('zh-cn');
@@ -25,7 +26,7 @@ isDataBasebeCreated(INDEXED_DATABASE_NAME)
   .then(() => {
     render(
       <AppContainer>
-        <Provider system={system} stores={[PikachuStore]}>
+        <Provider system={system} stores={[PikachuStore, RepeatStore]}>
           <Route />
         </Provider>
       </AppContainer>,

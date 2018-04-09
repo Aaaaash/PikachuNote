@@ -16,6 +16,13 @@ export default class SideBarStore extends Store<{}> {
     currentNote: {},
   }
 
+  public preStart() {
+    this.context.system.eventStream.onAny((_, obj) => {
+      const date = new Date()
+      console.info(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(), obj)
+    })
+  }
+
   public createReceive() {
     return this.receiveBuilder()
       .match(FetchDirectory, async (fetchDirectory: FetchDirectory) => {
